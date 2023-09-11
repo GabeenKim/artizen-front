@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 export default function GalleryFicture({width, data}){
     const [hover, setHover] = useState(false);

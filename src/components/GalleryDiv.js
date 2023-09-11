@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { styled } from "styled-components"
+import styled from "styled-components"
 import GalleryFicture from "./GalleryFicture";
 
 export default function GalleryDiv({widths, data}){

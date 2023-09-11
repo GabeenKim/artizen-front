@@ -49,7 +49,7 @@ export default function MenuBar(){
                     </Menu>
                 </MenuBtnContainer>
                 
-                <MenuTitle>마이페이지</MenuTitle>
+                <Link to={"/mypage"}><MenuTitle>마이페이지</MenuTitle></Link>
 
                 <MenuTitle>커뮤니티</MenuTitle>
 
