@@ -35,8 +35,9 @@ export default function MenuBar(){
     return(
         <Nav>
             <MenuBox>
-                <h1>Artizen</h1>
-                <MenuTitle>소개</MenuTitle>
+                {/* <h1>Artizen</h1> */}
+                <Link to={"/"}><img style={{width:"300px"}} src="/img/title.png"/></Link>
+                <Link to={"/intro"}><MenuTitle>소개</MenuTitle></Link>
 
                 <MenuBtnContainer>
                     <MenuTitle onClick={fundingHandler} ref={fundingRef}>펀딩</MenuTitle>
@@ -78,7 +79,7 @@ const Nav = styled.div`
     top: 0;
     left: 0;
     right: 0;
-
+    z-index: 9;
     background-color: white;
 `
 const Search = styled.form`
@@ -86,6 +87,7 @@ const Search = styled.form`
     justify-content: center;
     visibility: hidden;
     z-index: 9;
+    margin-bottom: 5px;
 
     ${({ isActive }) =>
     isActive &&
