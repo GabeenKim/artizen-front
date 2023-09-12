@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import TicketItem from './TicketItem';
+import TicketItem from '../components/TicketItem';
 import { useEffect, useState } from 'react';
 
 function UserTicket() {
     
     const [tickets, setTickets] = useState([]); {/* 나의 tickets 저장 */}
-    const [userId, setUserId] = useState(4); {/* localStorage 사용 예정 */}
+    const [userId, setUserId] = useState(localStorage.getItem('userId')); 
 
     useEffect(()=> {
         fetch(`http://localhost:9999/ticket/${userId}`, {
@@ -19,20 +19,23 @@ function UserTicket() {
             setTickets(newArray);
         });              
     }, []);
-
+    
     return (
         <UserTicketBox>
-            <ListBox>
+            <div>
                 <Label>보유 티켓 목록</Label>
-                {tickets.map((ticket, index) => {
+                {tickets.length > 0 
+                 ?tickets.map((ticket, index) => {
                     return (
                         <TicketItem
                             key={ticket.ticketId}
                             post={ticket}
                         />
                     )
-                })}
-            </ListBox>
+                })
+                : <h2>보유 티켓 없음</h2>
+                }
+            </div>
         </UserTicketBox>
     )
 }
@@ -46,9 +49,5 @@ const Label = styled.div`
     font-size: 20px;
     font-weight: bold;
 `;
-
-const ListBox = styled.div`
-    
-`
 
 export default UserTicket;

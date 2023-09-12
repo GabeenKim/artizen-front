@@ -4,7 +4,7 @@ import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 
 
-function UserSidebar({setSidebar}) {
+function WriterSidebar({setSidebar}) {
     return (
         <Bar>
           <Navigation
@@ -22,16 +22,8 @@ function UserSidebar({setSidebar}) {
                 // icon is optional
               },
               {
-                title: '펀딩 목록',
-                itemId: '/fundingList',
-              },
-              {
-                title: '티켓 목록',
-                itemId: '/ticketList'  
-              },
-              {
-                title: '찜 목록',
-                itemId: '/jjimList',
+                title: '나의 프로젝트',
+                itemId: '/myproject',
               },
             ]}
           />
@@ -41,14 +33,14 @@ function UserSidebar({setSidebar}) {
 }
 
 const Bar = styled.div`
-  top: 200px;
-  width: 10rem;
+
+  width: 12rem;
   margin-left: 100px;
   height: 100%;
   position: relative;
   left: 150px;
   top: 1px;
-  transform: translate(1em, 12rem); */
+  transform: translate(1em, 12rem); 
 `;
 
-export default UserSidebar;
+export default WriterSidebar;
