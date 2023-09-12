@@ -9,19 +9,20 @@ function CardList({ content }) {
   ];
   return (
     <div className="cardList">
-      {content.map((content, index) => (
-        <Card
-          key={content.conentId}
-          id={content.conentId}
-          contentName={content.contentName}
-          contentSum={content.contentSum}
-          category={content.category}
-          endDay={content.endDay}
-          startDay={content.startDay}
-          likes={content.likes}
-          img={img[index]}
-        />
-      ))}
+      {content &&
+        content.map((content, index) => (
+          <Card
+            key={index}
+            id={content.conentId}
+            contentName={content.contentName}
+            contentSum={content.contentSum}
+            category={content.category}
+            endDay={content.endDay}
+            startDay={content.startDay}
+            likes={content.likes}
+            img={img[index]}
+          />
+        ))}
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import '../../App.css';
 
-function Ranker({ id, name, totalPrice, img }) {
+function Ranker({ name, totalPrice, img }) {
   return (
-    <div className="">
+    <div>
       <div className="ranking-item">
         <img src={img} alt="movie" href="#"></img>
         <div className="ranking-content">

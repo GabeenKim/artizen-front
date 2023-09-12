@@ -16,18 +16,20 @@ function RankingList({ rankings }) {
   ];
   return (
     <div className="ranking-grid">
-      {rankings.map((ranking, index) => (
-        <RankingCard
-          id={ranking.conentId}
-          contentName={ranking.contentName}
-          contentSum={ranking.contentSum}
-          category={ranking.category}
-          startDay={ranking.startDay}
-          endDay={ranking.endDay}
-          likes={ranking.likes}
-          img={img[index]}
-        />
-      ))}
+      {rankings &&
+        rankings.map((ranking, index) => (
+          <RankingCard
+            key={index}
+            id={ranking.conentId}
+            contentName={ranking.contentName}
+            contentSum={ranking.contentSum}
+            category={ranking.category}
+            startDay={ranking.startDay}
+            endDay={ranking.endDay}
+            likes={ranking.likes}
+            img={img[index]}
+          />
+        ))}
     </div>
   );
 }

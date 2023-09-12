@@ -1,6 +1,6 @@
 import React from 'react';
 import { SectionsContainer, Section } from 'react-fullpage';
-import '../../App.css';
+import '../App.css';
 import ComTitlePage from './ComTitlePage';
 import ComFundingPage from './ComFundingPage';
 import ComSupportPage from './ComSupportPage';

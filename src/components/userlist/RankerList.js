@@ -9,16 +9,18 @@ function RankingList({ rankings }) {
     'https://cdn.icon-icons.com/icons2/2468/PNG/512/user_user_profile_user_icon_user_thump_icon_149319.png',
     'https://cdn.icon-icons.com/icons2/2468/PNG/512/user_user_profile_user_icon_user_thump_icon_149315.png',
   ];
+
   return (
     <div className="ranking-grid">
-      {rankings.map((ranking, index) => (
-        <Ranker
-          key={ranking.index}
-          name={ranking.userInfo.name}
-          totalPrice={ranking.support[0].price}
-          img={img[index]}
-        />
-      ))}
+      {rankings &&
+        rankings.map((ranking, index) => (
+          <Ranker
+            key={index}
+            name={ranking.userInfo.name}
+            totalPrice={ranking.support[0].price}
+            img={img[index]}
+          />
+        ))}
     </div>
   );
 }

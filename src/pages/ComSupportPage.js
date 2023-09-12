@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import '../../App.css';
-// import CardComponent from '../list/CardComponent';
-// import RankingList from '../list/RankinList';
-import RankerList from '../userlist/RankerList';
-import RankUserListComponent from '../userlist/RankUserListComponent';
+import '../App.css';
 
-function ComSupportPage() {
+import RankerList from '../components/userlist/RankerList';
+import RankUserListComponent from '../components/userlist/RankUserListComponent';
+
+function ComSupportPage(props) {
   const [rankings, setRanking] = useState([]);
   const [isListVisible, setListVisible] = useState(false);
 
@@ -16,8 +15,9 @@ function ComSupportPage() {
       fetch(endpoint)
         .then((response) => response.json())
         .then((response) => {
-          setRanking(response.slice(0, 3));
+          setRanking(response.slice(3, 10));
           setListVisible(true); // 데이터 로드 후 리스트 표시
+          console.log('전체순위보기', rankings, isListVisible);
         });
     } else {
       setListVisible(false); // 이미 보이는 경우에는 리스트 숨김
@@ -38,8 +38,6 @@ function ComSupportPage() {
           See All
         </button>
       </div>
-
-      {/* isListVisible 상태에 따라 조건부 렌더링 */}
       {isListVisible && <RankerList rankings={rankings} />}
     </div>
   );

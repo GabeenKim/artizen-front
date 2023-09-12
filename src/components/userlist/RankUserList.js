@@ -10,14 +10,15 @@ function RankUserList({ rank }) {
   console.log(rank);
   return (
     <div className="cardList">
-      {rank.map((rank, index) => (
-        <RankUser
-          key={rank.index}
-          name={rank.userInfo.name}
-          totalPrice={rank.support[0].price}
-          img={img[index]}
-        />
-      ))}
+      {rank &&
+        rank.map((rank, index) => (
+          <RankUser
+            key={index}
+            name={rank.userInfo.name}
+            totalPrice={rank.support[0].price}
+            img={img[index]}
+          />
+        ))}
     </div>
   );
 }

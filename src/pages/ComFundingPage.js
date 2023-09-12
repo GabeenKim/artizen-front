@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import '../../App.css';
+import '../App.css';
 
-import CardComponent from '../list/CardComponent';
-import RankingList from '../list/RankinList';
+import CardComponent from '../components/list/CardComponent';
+import RankingList from '../components/list/RankinList';
 
 function ComFundingPage() {
   const [rankings, setRanking] = useState({});
