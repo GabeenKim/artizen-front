@@ -12,6 +12,7 @@ import Intro from './pages/Intro';
 import Contents from './pages/Contents';
 import EventPage from './pages/EventPage';
 import MyPage from './pages/MyPage';
+import Login from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/mypage",
     element: <MyPage/>
+  },
+  {
+    path: "/login",
+    element: <Login/>
   }
 ])
 

@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link, useNavigate, useLocation } from "react-router-dom"
 import styled from 'styled-components'
 import useDetectClose from "../hooks/useDetectClose";
 
 export default function MenuBar(){
     const [fundingIsOpen, fundingRef, fundingHandler] = useDetectClose(false);
+    const [logoutIsOpen, logoutRef, logoutHandler] = useDetectClose(false);
     const [search, setSearch] = useState(false);
     const [searchText, setSearchText] = useState("");
     const [searchType, setSearchType] = useState("제목");
+    const navigate = useNavigate();
+    const location = useLocation();
+
 
     const clickSearch = () => {
         setSearch(!search)
@@ -28,6 +32,16 @@ export default function MenuBar(){
             e.preventDefault();
         }
     }
+
+    const clickLogout = () => {
+        localStorage.clear();  
+        if(location.pathname === "/"){
+            window.location.replace("/");
+        } else{
+            navigate("/");
+        }
+    }
+
     useEffect(()=>{
         console.log(searchType)
     }, [searchType])
@@ -43,8 +57,8 @@ export default function MenuBar(){
                     <MenuTitle onClick={fundingHandler} ref={fundingRef}>펀딩</MenuTitle>
                     <Menu isDropped={fundingIsOpen}>
                         <Ul>
-                            <li><Link to={"/funding"} style={{textDecoration:"none", color:"black"}}>투자</Link></li>
-                            <li>후원</li>
+                            <li><Link to={"/contents/funding"} style={{textDecoration:"none", color:"black"}}>투자</Link></li>
+                            <li><Link to={"/contents/support"} style={{textDecoration:"none", color:"black"}}>후원</Link></li>
                         </Ul>
                     </Menu>
                 </MenuBtnContainer>
@@ -57,7 +71,30 @@ export default function MenuBar(){
                     search ? <img src="/img/cancel.png"/>:<img src="/img/search.png"/>
                 }</MenuTitle>
 
-                <MenuTitle>로그인</MenuTitle>
+                {
+                    localStorage.getItem("name") != null ?
+                    <>
+                    <MenuBtnContainer>
+                        <MenuTitle onClick={logoutHandler} ref={logoutRef}>
+                            <p>
+                                {
+                                    localStorage.getItem("nickname") == null ?
+                                    <span>{localStorage.getItem("nickname")} </span>
+                                    : null
+                                }
+                                <span style={{fontWeight:"bold"}}>{localStorage.getItem("name")}</span>
+                            </p>
+                        </MenuTitle>
+                        <Menu isDropped={logoutIsOpen}>
+                            <Ul>
+                                <li onClick={clickLogout}>로그아웃</li>
+                            </Ul>
+                        </Menu>
+                    </MenuBtnContainer>
+                    </>
+                    :
+                    <Link to={"/login"}><MenuTitle>로그인</MenuTitle></Link>
+                }
             </MenuBox>
 
             <Search isActive={search} onSubmit={handleSubmit}>
@@ -151,7 +188,7 @@ const Menu = styled.div`
     visibility: hidden;
     transform: translate(-50%, -20px);
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
-    z-index: 9;
+    z-index: 10;
 
     ${({ isDropped }) =>
     isDropped &&
