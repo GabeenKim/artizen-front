@@ -9,7 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import { DialogContent, TextField, Button } from '@mui/material';
 
 function UserInfo() {
-    const [name, setName] = useState("조원형");
+    const [name, setName] = useState(localStorage.getItem('name'));
     const [email, setEmail] = useState("mesh153@naver.com");
     const [password, setPassword] = useState("*****");
     const [account, setAccount] = useState("123-123-123");
@@ -86,7 +86,7 @@ function UserInfo() {
                         <div>
                             {/* 닉네임 */}
                             <NickNameBox>
-                                        정의로운 예술가
+                                        {localStorage.getItem("nickname")}
                             </NickNameBox>
                             {/* 계좌 입출금 */}
                             <AccountBox>
@@ -120,8 +120,7 @@ function UserInfo() {
                                 </Dialog>
                             </AccountBox>
                         </div>
-                    </ProFileDetailBox>
-                    
+                    </ProFileDetailBox> 
                     {/* 하단 프로필 */}
                     <InfoBox>
                         <InfoLabel>이름</InfoLabel>
@@ -156,16 +155,16 @@ function UserInfo() {
             </ProFileBox>
             
         </UserInfoBox>
-
     )
 }
 
 
 /* [전체 박스] */
 const UserInfoBox = styled.div`
+    width: 100%;
     display: flex;
-    width: 50%;
-    margin-left: 100px;
+    justify-content: center;
+    margin-top: 55px;
 `;
 
 /* [상단 프로필] */
@@ -173,8 +172,8 @@ const ProFileBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 480px;
-    width: 100%;
+    align-items: center;
+    width: 35%;
 `;
 
 const ProFileDetailBox = styled.div`
@@ -185,7 +184,7 @@ const ProFileDetailBox = styled.div`
 `;
 
 const NickNameBox = styled.div`
-    margin-left: 100px;
+
     background-color: #eee;
     border-radius: 40px;
     padding: 12px 15px;
@@ -194,7 +193,7 @@ const NickNameBox = styled.div`
 
 const AccountBox = styled.div`
     margin-top: 35px;
-    margin-left: 50px;
+    
 `;
 
 const MyMoneyBox = styled.div`
@@ -272,11 +271,11 @@ const Input = styled.input`
 `
 
 const SubmitButton = styled.button`
-    width: 155px;
+    width: 25%;
     height: 40px;
     border-radius: 10px;
     margin-top: 20px;
-    margin-left: 700px;
+    margin-left: 450px;
     font-weight: 700;
     font-size: 13px;
     color: white;
@@ -298,26 +297,23 @@ const SubmitButton = styled.button`
 const AccountInfoForm = styled.form`
     display: flex;
     margin-top: 30px;
-    margin-left: 110px;
+    width: 90%;
 `;
 
 const AccountInput = styled.input`
-    margin-left: 60px;
     background-color: #eee;
     border: none;
-    padding: 12px 15px;
-    width:330px;
 `
 const AccountInfoLabel = styled.label`
+    text-align: center;
     font-weight: 600;
-    margin-left: 120px;
-    width: 20%;
+    width: 30%;
+    margin-left: 60px;
 `
 
 const AccountInfoButton = styled.button`
     height: 40px;
     background-color: #0D6EFD;
-
     width: 100%;
     border-radius: 7px;
     color: white;

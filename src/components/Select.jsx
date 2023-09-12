@@ -25,9 +25,10 @@ const CustomSelect = (props) => {
 
   const SelectBox = styled.div`
     position: relative;
-    width: 120px;
+    width: 15%;
     padding: 8px;
     margin-left: 120px;
+    margin-right: 35px;
     border-radius: 12px;
     background-color: #ffffff;
     align-self: center;

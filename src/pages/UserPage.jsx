@@ -5,14 +5,14 @@ import UserInfo from "../components/UserInfo";
 function UserPage({sidebar}) {
 
     return (
-        <UserBox>            
+        <Box>            
               <UserInfo/> 
-        </UserBox>
+        </Box>
     );
 }
 
-const UserBox = styled.div`
-   width: auto;
+const Box = styled.div`
+  margin: auto;
 `
 
 export default UserPage;
