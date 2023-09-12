@@ -1,0 +1,32 @@
+import React from 'react';
+import '../App.css';
+
+function ComTitlePage() {
+  return (
+    <div>
+      <div id="titleTop">
+        <h1>*</h1>
+        <h1>Artizen</h1>
+        <h1>Monthly</h1>
+        <h1>Awards</h1>
+      </div>
+      <div id="titleMiddle">
+        <h1>TOP 3</h1>
+        <h2>FROM TOP 10</h2>
+      </div>
+      <div id="titleBottom">
+        <img
+          src={require('C:/Users/82103/Desktop/react_ex/artizen-project/src/image/arrow.png')}
+        />
+        <img
+          src={require('C:/Users/82103/Desktop/react_ex/artizen-project/src/image/arrow.png')}
+        />
+        <img
+          src={require('C:/Users/82103/Desktop/react_ex/artizen-project/src/image/arrow.png')}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default ComTitlePage;

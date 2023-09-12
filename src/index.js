@@ -3,48 +3,55 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Intro from './pages/Intro';
 import Contents from './pages/Contents';
 import EventPage from './pages/EventPage';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
+import CommunityPage from './pages/CommunityPage';
+import Register from './pages/Register';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />
+    path: '/',
+    element: <Home />,
   },
   {
-    path: "/intro",
-    element: <Intro/>
+    path: '/intro',
+    element: <Intro />,
   },
   {
-    path: "/contents/:type",
-    element: <Contents/>
+    path: '/contents/:type',
+    element: <Contents />,
   },
   {
-    path: "/event",
-    element: <EventPage/>
+    path: '/event',
+    element: <EventPage />,
   },
   {
-    path: "/mypage",
-    element: <MyPage/>
+    path: '/mypage',
+    element: <MyPage />,
   },
   {
-    path: "/login",
-    element: <Login/>
-  }
-])
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/community',
+    element: <CommunityPage />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
