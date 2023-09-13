@@ -6,25 +6,32 @@ import UserTicketPage from "./UserTicketPage";
 import UserFundingPage from "./UserFundingPage";
 import WriterSidebar from "../components/WriterSidebar";
 import { useEffect, useState } from "react";
-
-
+import { Routes, Route, Navigate } from "react-router-dom";
 
 function MyPage(){
     const [sidebar, setSidebar] = useState("/info");
     
     {/* sidebar 상태값 변경 */}
     useEffect(()=>{
-        
+       
     }, [sidebar]);
 
     
     return (
         <div>
+            {/* 접근 권한 없는 유저는 intro페이지로 redirect*/}
+            {
+                Object.keys(localStorage).includes('infoId') == false ?
+                <Routes>
+                    <Route path="/" element={<Navigate replace to="/intro" />} />
+                </Routes> :
+                null
+            }
+
             {/* 메뉴 바*/}
             <MenuBar/>
             
             {/* 사이드 바 */}
-            
             {
                 Object.keys(localStorage).includes('writerId') == false ?
                 <UserSidebar setSidebar={setSidebar}/> :

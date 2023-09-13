@@ -1,19 +1,28 @@
 import React from "react";
-import styled from 'styled-components'
+import styled from 'styled-components';
+import SwiperMultipleDiv from '../components/SwiperMultipleDiv';
+import { dummyData } from '../assets/dummyData';
 
-function UserFundingPage({sidebar}) {
+function UserFundingPage() {
 
     return (
         <Box>            
-            펀딩 페이지
+            <div>
+                <b>[ {localStorage.getItem("name")} ]님의 펀딩 중인 프로젝트 </b>
+            </div>
+       
+            <div style={{width:"50%"}}>
+                <SwiperMultipleDiv data={dummyData}/>
+            </div>
         </Box>
     );
 }
 
 const Box = styled.div`
-    displa: flex;
+    width: 100%;
+    display: flex;
     justify-content: center;
-    align-items: center;
-`
+    margin-top: 55px;
+`;
 
 export default UserFundingPage;
