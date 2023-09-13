@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useState} from 'react';
 import styled from 'styled-components';
-const CustomSelect = (props) => {
-    const [currentValue, setCurrentValue] = useState("신한");
+
+const CustomSelect = ({setBank}) => {
+    const [currentValue, setCurrentValue] = useState("");
     const [showOptions, setShowOptions] = useState(false);
 
     const handleOnChangeSelectValue = (e) => {
       const { innerText } = e.target;
       setCurrentValue(innerText);
+      setBank(innerText);
     };
   
     return (
@@ -17,7 +19,6 @@ const CustomSelect = (props) => {
           <Option onClick={handleOnChangeSelectValue}>신한</Option>
           <Option onClick={handleOnChangeSelectValue}>하나</Option>
           <Option onClick={handleOnChangeSelectValue}>국민</Option>
-          <Option onClick={handleOnChangeSelectValue}>IBK</Option>
         </SelectOptions>
       </SelectBox>
     )
@@ -25,7 +26,7 @@ const CustomSelect = (props) => {
 
   const SelectBox = styled.div`
     position: relative;
-    width: 15%;
+    width: 25%;
     padding: 8px;
     margin-left: 120px;
     margin-right: 35px;

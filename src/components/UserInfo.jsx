@@ -1,43 +1,64 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { DialogContent, TextField, Button } from '@mui/material';
 import UserImage from '../image/profile-user.png';
 import CustomSelect from './Select';
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
-import { DialogContent, TextField, Button } from '@mui/material';
 
 function UserInfo() {
-    const [name, setName] = useState(localStorage.getItem('name'));
-    const [email, setEmail] = useState("mesh153@naver.com");
-    const [password, setPassword] = useState("*****");
-    const [account, setAccount] = useState("123-123-123");
-    const [interest, setInterest] = useState("전시, 영화");
+    const [nickname, setNickName] = useState(localStorage.getItem('nickname'));
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("*******");
+    const [account, setAccount] = useState("");
+    const [interest, setInterest] = useState("");
+    const [bank, setBank] = useState("");
 
-    const [myMoney, setMyMoney] = useState(100000);
+    const [myMoney, setMyMoney] = useState(0);
     const [addMoney, setAddMoney] = useState(0);
     const [minusMoney, setMinusMoney] = useState(0);
 
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [isMinusOpen, setIsMinusOpen] = useState(false);
+    const [isNickNameOpen, setIsNickNameOpen] = useState(false);
 
-    {/* 이름 */}
-    const handleChangeName = (e) => {
-        setName(e.target.value);
-    };
+    const accountInput = useRef();
+
+    {/* 회원 정보 받아오기 */}
+    useEffect(() => {
+        fetch(`http://localhost:9999/account/showUser/${localStorage.getItem('infoId')}`, {
+                method : "GET"   
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                try{
+                    setMyMoney(res["userInfo"]["balance"]);
+                    setEmail(res["userInfo"]["email"]);
+                    setInterest(res["interests"]);
+                    setAccount(res["userInfo"]["accounts"]);
+                    setBank(res["userInfo"]["bank"]);
+                    if(res["userInfo"]["accounts"] != null) {
+                        accountInput.current.disabled = true;
+                    }
+                }catch(err){
+                    console.log(err);
+                }
+            });
+    },[]);
 
     {/* 이메일 */}
     const handleChangeEmail = (e) => {
         setEmail(e.target.value);
     }
 
-    {/* 비밀번호 */}
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value);
+    {/* 계좌 */}
+    const handleChangeAccount = (e) => {
+        setAccount(e.target.value);
     }
 
-    {/* 충전 */}
+    {/* 충전 || Modal */}
     const handleChangeAddModal = (e) => {
         setIsAddOpen(!isAddOpen);
     }
@@ -47,11 +68,34 @@ function UserInfo() {
     };
 
     const handleAddMoneySubmit =  (e) => {
-       setMyMoney(myMoney + parseInt(addMoney));
-       setIsAddOpen(!isAddOpen);
+        if(isNaN(addMoney)){
+            alert("숫자만 입력해주세요.");
+        } else{
+            setMyMoney(myMoney + parseInt(addMoney));
+
+            fetch("http://localhost:9999/account/updateAccount", {
+            headers: {
+            Accept: 
+            "application/json",
+            "Content-Type": "application/json"
+            },
+            method: "PATCH",	
+            body: JSON.stringify({
+                infoId: localStorage.getItem("infoId"),
+                amount: addMoney,
+            })})
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(err => {
+                console.error(err);
+            });;
+
+            setIsAddOpen(!isAddOpen);
+        }
     };
 
-    {/* 출금 */}
+    {/* 출금 || Modal */}
     const handleChangeMinusModal = (e) => {
         setIsMinusOpen(!isMinusOpen);
     }
@@ -61,21 +105,122 @@ function UserInfo() {
     };
 
     const handleMinusMoneySubmit =  (e) => {
-       setMyMoney(myMoney - parseInt(minusMoney));
-       setIsMinusOpen(!isMinusOpen);
+        if(isNaN(minusMoney)){
+            alert("숫자만 입력해주세요.")
+        }else{
+            setMyMoney(myMoney - parseInt(minusMoney));
+
+            fetch("http://localhost:9999/account/updateAccount", {
+            headers: {
+            Accept: 
+            "application/json",
+            "Content-Type": "application/json"
+            },
+            method: "PATCH",	
+            body: JSON.stringify({
+                infoId: localStorage.getItem("infoId"),
+                amount: -minusMoney,
+            })})
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(err => {
+                console.error(err);
+            });;
+
+            setIsMinusOpen(!isMinusOpen);
+        }
     };
-    
-    {/* 이름 & 비밀번호 변경 */}
-    const handleSubmit =  (e) => {
-        alert(`이름 : ${name}, 비밀번호 : ${password}`);
-        e.preventDefault();
+
+    {/* 닉네임 변경 */}
+    const handleNickNameValue =  (e) => {
+        setNickName(e.target.value);
     };
+
+    const handleNickNameModal = (e) => {
+        setIsNickNameOpen(!isNickNameOpen);
+    }
+
+    const handleNickNameSubmit =  (e) => {
+        setNickName(nickname);
+
+        fetch("http://localhost:9999/account/updateUserNickname", {
+            headers: {
+            Accept: 
+            "application/json",
+            "Content-Type": "application/json"
+            },
+            method: "PATCH",	
+
+            body: JSON.stringify({
+                infoId: localStorage.getItem("infoId"),
+                nickname: nickname,
+            })
+        })
+        .then(function (data) {
+            console.log(data);
+        })
+        .catch(err => {
+            console.error(err);
+        });;
+
+        localStorage.setItem("nickname",nickname);
+        setIsNickNameOpen(!isNickNameOpen);
+    };
+
+    {/* 회원 정보 수정 */}
+    const handleInfoUpdate = (e) => {
+        fetch("http://localhost:9999/account/updateUser", {
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+            },
+            method: "PATCH",	
+
+            body: JSON.stringify({
+                infoId: localStorage.getItem("infoId"),
+                name: localStorage.getItem("name"),
+                password: password
+            })
+        })
+        .then(function (data) {
+            console.log(data);
+        })
+        .catch(err => {
+            console.error(err);
+        });;
+    }
+
+    {/* 계좌 등록 */}
+    const handleAddAccount = (e) => {
+        fetch("http://localhost:9999/account/addAccount", {
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+            },
+            method: "POST",	
+
+            body: JSON.stringify({
+                infoId: localStorage.getItem("infoId"),
+                accounts: account,
+                bank: bank
+            })
+        })
+        .then(function (data) {
+            console.log(data);
+        })
+        .catch(err => {
+            console.error(err);
+        });;
+        
+        
+    }
 
     return (
        
-        <UserInfoBox>
+        <Box>
             <ProFileBox>   
-                <UserForm onSubmit={handleSubmit}>
+                <UserForm onSubmit={handleInfoUpdate}>
                     {/* 상단 프로필 */}
                     <ProFileDetailBox>
                         {/* 이미지 */}
@@ -86,8 +231,20 @@ function UserInfo() {
                         <div>
                             {/* 닉네임 */}
                             <NickNameBox>
-                                        {localStorage.getItem("nickname")}
+                                <p>{nickname}</p>
+                                <Button onClick={handleNickNameModal}>닉네임 변경</Button>
+                                <Dialog open={isNickNameOpen} onClose={handleNickNameModal}>
+                                    <DialogTitle>닉네임 변경</DialogTitle>
+                                    <br></br>
+                                    <DialogContent>
+                                        <TextField label="변경할 닉네임" type='text' onChange={handleNickNameValue}/>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button variant="contained" color="primary" onClick={handleNickNameSubmit}>변경</Button>
+                                    </DialogActions>
+                                </Dialog>    
                             </NickNameBox>
+                           
                             {/* 계좌 입출금 */}
                             <AccountBox>
                                 <MyMoneyBox>
@@ -100,7 +257,7 @@ function UserInfo() {
                                     <DialogTitle>충전하기</DialogTitle>
                                     <br></br>
                                     <DialogContent>
-                                        <TextField label="충전 금액" type='text' name={addMoney} onChange={handleAddMoneyValue}/>
+                                        <TextField label="충전 금액" type='text' onChange={handleAddMoneyValue}/>
                                     </DialogContent>
                                     <DialogActions>
                                         <Button variant="contained" color="primary" onClick={handleAddMoneySubmit}>충전</Button>
@@ -112,7 +269,7 @@ function UserInfo() {
                                     <DialogTitle>출금하기</DialogTitle>
                                     <br></br>
                                     <DialogContent>
-                                        <TextField label="출금 금액" type='text' name={minusMoney} onChange={handleMinusMoneyValue}/>
+                                        <TextField label="출금 금액" type='text' onChange={handleMinusMoneyValue}/>
                                     </DialogContent>
                                     <DialogActions>
                                         <Button variant="contained" color="primary" onClick={handleMinusMoneySubmit}>출금</Button>
@@ -124,12 +281,12 @@ function UserInfo() {
                     {/* 하단 프로필 */}
                     <InfoBox>
                         <InfoLabel>이름</InfoLabel>
-                        <Input type="text" placeholder={name} onChange={handleChangeName} />
+                        <Input type="text" placeholder={localStorage.getItem('name')} onChange={(e)=>localStorage.setItem('name',e.target.value)} required/>
                     </InfoBox>
                         
                     <InfoBox>
                         <InfoLabel>비밀번호</InfoLabel>
-                        <Input type="password" placeholder={password} onChange={handleChangePassword}/>
+                        <Input type="password" placeholder={password} onChange={(e)=>setPassword(e.target.value)}/>
                     </InfoBox>
 
                     <InfoBox>
@@ -145,22 +302,23 @@ function UserInfo() {
                     <SubmitButton type="submit">정보 수정</SubmitButton>
                 </UserForm>
 
-                  {/* 계좌 등록 폼*/}
-                <AccountInfoForm>
+                {/* 계좌 등록 폼*/}
+                <AccountInfoForm onSubmit={handleAddAccount}>
                         <AccountInfoLabel>계좌 정보</AccountInfoLabel>
-                        <CustomSelect name="" id=""> </CustomSelect>
-                        <AccountInput type="text" placeholder={account}/>   
-                        <AccountInfoButton> 등록 </AccountInfoButton>
+                        <CustomSelect setBank={setBank} id=""> </CustomSelect>   
+                        
+                        <AccountInput type="text" placeholder={account} ref={accountInput} onChange={handleChangeAccount}/>
+                        <AccountInfoButton> 등록 </AccountInfoButton> 
                 </AccountInfoForm>
             </ProFileBox>
             
-        </UserInfoBox>
+        </Box>
     )
 }
 
 
 /* [전체 박스] */
-const UserInfoBox = styled.div`
+const Box = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
@@ -184,7 +342,8 @@ const ProFileDetailBox = styled.div`
 `;
 
 const NickNameBox = styled.div`
-
+    width: 100%;
+    height: 30%;
     background-color: #eee;
     border-radius: 40px;
     padding: 12px 15px;

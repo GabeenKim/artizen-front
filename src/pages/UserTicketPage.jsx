@@ -21,7 +21,7 @@ function UserTicket() {
     }, []);
     
     return (
-        <UserTicketBox>
+        <Box>
             <div>
                 <Label>보유 티켓 목록</Label>
                 {tickets.length > 0 
@@ -36,11 +36,11 @@ function UserTicket() {
                 : <h2>보유 티켓 없음</h2>
                 }
             </div>
-        </UserTicketBox>
+        </Box>
     )
 }
 
-const UserTicketBox = styled.div`
+const Box = styled.div`
     width: 50%;
     margin-left: 600px;
 `;
