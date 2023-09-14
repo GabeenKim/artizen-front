@@ -20,6 +20,7 @@ function CardList({ content }) {
             endDay={content.endDay}
             startDay={content.startDay}
             likes={content.likes}
+            target={content.target}
             img={img[index]}
           />
         ))}
