@@ -4,10 +4,12 @@ import '../App.css';
 import ComTitlePage from './ComTitlePage';
 import ComFundingPage from './ComFundingPage';
 import ComSupportPage from './ComSupportPage';
+import MenuBar from '../components/MenuBar';
+import Footer from '../components/Footer';
 
 function CommunityPage(props) {
   let options = {
-    anchors: ['title', 'ranking1', 'ranking2', 'section'],
+    anchors: ['title', 'ranking1', 'ranking2'],
     navigation: true,
     scrollBar: false,
     delay: 700,
@@ -16,6 +18,7 @@ function CommunityPage(props) {
   return (
     <SectionsContainer {...options}>
       <Section id="section1">
+        <MenuBar />
         <ComTitlePage />
       </Section>
 
@@ -24,8 +27,8 @@ function CommunityPage(props) {
       </Section>
       <Section id="section3">
         <ComSupportPage />
+        <Footer />
       </Section>
-      <Section>{/*footer 등등*/}</Section>
     </SectionsContainer>
   );
 }

@@ -45,9 +45,8 @@
 }
 
 #titleTop {
-  height: 150px;
   box-sizing: border-box;
-  padding-top: 5px;
+  padding-top: 30px;
   margin: 120px;
 }
 #titleTop h1 {
@@ -59,7 +58,6 @@
 }
 
 #titleMiddle {
-  height: 500px;
   box-sizing: border-box;
 }
 #titleMiddle h1 {
@@ -150,12 +148,14 @@
   background-color: #ff8a8a;
   color: white;
 }
+
 .cardContainer {
   box-sizing: border-box;
   position: relative;
+  margin-top: 50px;
   display: flex;
   width: 30%;
-  height: 700px;
+  height: 510px;
   flex-direction: column;
   align-items: center;
   background-color: #fff; /* 카드 배경색 */
@@ -165,7 +165,7 @@
 
 .cardContainer img {
   width: 100%;
-  height: 60%;
+  height: 50%;
   object-fit: cover;
   display: flex;
   border-top-left-radius: 10px;
@@ -175,13 +175,20 @@
   position: relative;
 }
 
-.cardContainer h2,
-.cardContainer h3,
-.cardContainer h4,
-.cardContainer p {
+.cardContainer h2 {
   line-height: 20px;
-  padding: 0;
   text-align: center;
+  position: relative;
+}
+.cardContainer #like {
+  text-align: center;
+  bottom: 90px;
+  position: absolute;
+}
+.cardContainer #category {
+  text-align: center;
+  bottom: 40px;
+  position: absolute;
 }
 
 .cardContainer #footLink {

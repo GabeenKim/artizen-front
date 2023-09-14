@@ -2,6 +2,7 @@ import React from 'react';
 import '../../App.css';
 
 function Card({
+  key,
   contentName,
   contentSum,
   category,
@@ -9,6 +10,7 @@ function Card({
   endDay,
   likes,
   img,
+  target,
 }) {
   return (
     <div className="cardContainer">
@@ -37,9 +39,8 @@ function Card({
         <h3>
           {startDay.slice(0, 10)} ~ {endDay.slice(0, 10)}
         </h3>
-        <h3>좋아요 수 : {likes} ❤ </h3>
-        <h4>카테고리 : {category}</h4>
-        <p>간단한 프로젝트 소개글</p>
+        <h3 id="like">좋아요 수 : {likes} ❤ </h3>
+        <h4 id="category">카테고리 : {category}</h4>
       </div>
       <a id="footLink" href="#">
         👉 Read full project

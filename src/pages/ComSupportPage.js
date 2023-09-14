@@ -24,6 +24,10 @@ function ComSupportPage(props) {
     }
   };
 
+  const MoveToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div style={{ width: '75%', margin: '1rem auto' }}>
       <div id="rankTitle1">

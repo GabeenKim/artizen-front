@@ -3,12 +3,10 @@ import '../App.css';
 
 function ComTitlePage() {
   return (
-    <div>
+    <div className="title">
       <div id="titleTop">
-        <h1>*</h1>
         <h1>Artizen</h1>
-        <h1>Monthly</h1>
-        <h1>Awards</h1>
+        <h1>Monthly Awards</h1>
       </div>
       <div id="titleMiddle">
         <h1>TOP 3</h1>
