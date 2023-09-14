@@ -11,7 +11,7 @@ function ComSupportPage(props) {
   const loadMoreItems = () => {
     if (!isListVisible) {
       // 리스트가 숨겨져 있는 경우만 데이터 로드
-      const endpoint = `http://localhost:9999/community/showSupportRank`;
+      const endpoint = `http://localhost:9999/funding/showSupportRank`;
       fetch(endpoint)
         .then((response) => response.json())
         .then((response) => {
