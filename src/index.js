@@ -12,6 +12,7 @@ import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import CommunityPage from './pages/CommunityPage';
 import Register from './pages/Register';
+import FundingContentDetail from './pages/FundingContentDetail';
 
 const router = createBrowserRouter([
   {
@@ -43,10 +44,19 @@ const router = createBrowserRouter([
     element: <CommunityPage />,
   },
   {
-    path: '/register',
-    element: <Register />,
+    path: "/login",
+    element: <Login/>
   },
-]);
+  {
+    path: "/register",
+    element: <Register/>
+  },
+  {
+    path: "/FundingContentDetail",
+    element: <FundingContentDetail/>
+  }
+])
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
