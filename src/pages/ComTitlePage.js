@@ -14,13 +14,13 @@ function ComTitlePage() {
       </div>
       <div id="titleBottom">
         <img
-          src={require('C:/Users/82103/Desktop/react_ex/artizen-project/src/image/arrow.png')}
+          src={require('../image/arrow.png')}
         />
         <img
-          src={require('C:/Users/82103/Desktop/react_ex/artizen-project/src/image/arrow.png')}
+          src={require('../image/arrow.png')}
         />
         <img
-          src={require('C:/Users/82103/Desktop/react_ex/artizen-project/src/image/arrow.png')}
+          src={require('../image/arrow.png')}
         />
       </div>
     </div>
