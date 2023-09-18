@@ -25,14 +25,14 @@ export function userList(setUsers){
     })
     .then(res=>res.json())
     .then(res=>{
-        try{
-            const currentUser = [];
-            res.map((item) => currentUser.push(item));
-            let newArray = [...currentUser];
-            setUsers(newArray);
-        }catch(err){
-            console.log(err);
-        }
+    try{
+        const currentUser = [];
+        res.map((item) => currentUser.push(item));
+        let newArray = [...currentUser];
+        setUsers(newArray);
+    }catch(err){
+        console.log(err);
+    }
     });
 }
 
