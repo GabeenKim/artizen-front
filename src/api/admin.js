@@ -33,6 +33,14 @@ export function userList(setUsers){
         }catch(err){
             console.log(err);
         }
+        try{
+            const currentUser = [];
+            res.map((item) => currentUser.push(item));
+            let newArray = [...currentUser];
+            setUsers(newArray);
+        }catch(err){
+            console.log(err);
+        }
     });
 }
 
