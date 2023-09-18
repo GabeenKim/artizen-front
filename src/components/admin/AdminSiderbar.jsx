@@ -23,7 +23,7 @@ function AdminSiderbar({setSidebar}) {
                 itemId: '/project',
               },
               {
-                title: '수익률 분배',
+                title: '수익금 처리',
                 itemId: '/distribution',
               },
             ]}
