@@ -8,7 +8,7 @@ export function login(email, password) {
 }
 
 export function register(name, nickname, password, email) {
-  return axios.post(`http://localhost:9999/account/register`, {
+  return axios.post(`http://localhost:9999/account/registerUser`, {
     name: name,
     nickname: nickname,
     password: password,
