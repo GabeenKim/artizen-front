@@ -12,7 +12,9 @@ import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import CommunityPage from './pages/CommunityPage';
 import Register from './pages/Register';
-import FundingContentDetail from './pages/FundingContentDetail';
+import TestStart from './pages/TestStart';
+import TestOption from './components/testPages/TestOption';
+import TestResult from './components/testPages/TestResult';
 
 const router = createBrowserRouter([
   {
@@ -44,19 +46,22 @@ const router = createBrowserRouter([
     element: <CommunityPage />,
   },
   {
-    path: "/login",
-    element: <Login/>
+    path: '/register',
+    element: <Register />,
   },
   {
-    path: "/register",
-    element: <Register/>
+    path: '/investTest',
+    element: <TestStart />,
   },
   {
-    path: "/FundingContentDetail",
-    element: <FundingContentDetail/>
-  }
-])
-
+    path: '/investTest/option',
+    element: <TestOption />,
+  },
+  {
+    path: '/investTest/result/:id',
+    element: <TestResult component={TestResult} />,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
