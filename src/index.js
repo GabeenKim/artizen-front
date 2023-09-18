@@ -19,6 +19,7 @@ import FundingWritePage from './contentpage/FundingWritePage';
 import SupportWritePage from './contentpage/SupportWritePage';
 import MorePage from './contentpage/MorePage';
 import AdminPage from './pages/admin/AdminPage';
+import FundingContentDetail from './pages/FundingContentDetail';
 
 const router = createBrowserRouter([
   {
