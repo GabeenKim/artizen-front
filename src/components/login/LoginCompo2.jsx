@@ -17,8 +17,9 @@ const LoginCompo2 = () => {
     try {
       const response = await login(email, password);
       localStorage.setItem('userId', response.data.userId);
+      localStorage.setItem('infoId',response.data.userInfo.infoId);
+      localStorage.setItem('name',response.data.userInfo.name);
       const storedUserId = localStorage.getItem('userId');
-      console.log(response.data.userId);
       navigate('/intro'); 
     } catch (e) {
       console.error(e); // handle error
