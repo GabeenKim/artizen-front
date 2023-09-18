@@ -36,14 +36,6 @@ export function userList(setUsers){
     });
 }
 
-{/* 프로젝트 승인 :: CheckCard.jsx */}
-export function ok(contentId){
-    axios.get('http://localhost:9999/admin/ok/' + contentId)
-    .catch(error => {
-        console.error(error);
-    });
-}
-
 {/* 프로젝트 거부 :: CheckCard.jsx */}
 export function fail(contentId){
     axios.get('http://localhost:9999/admin/fail/' + contentId)
