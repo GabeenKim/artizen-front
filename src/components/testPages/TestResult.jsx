@@ -4,24 +4,28 @@ import MenuBar from '../MenuBar';
 import styled from 'styled-components';
 
 import ResultChar from './result.json';
-import { useEffect } from 'react';
-import axios from 'axios';
 
 function TestResult() {
   const { id } = useParams();
   let character = ResultChar[id];
+  const userId = parseInt(localStorage.getItem('userId'));
 
   if (!character) {
     return <div>존재하지 않는 결과입니다.</div>;
   }
 
-  axios
-    .patch('http://localhost:9999/account/updateUser', {
+  fetch('http://localhost:9999/account/registerCharacter', {
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId: userId,
       character: character.nickname,
-      userId: localStorage.getItem('userId'),
-    })
-    .then(function (response) {})
-    .catch(function (error) {});
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => console.log(result));
 
   return (
     <Body>
