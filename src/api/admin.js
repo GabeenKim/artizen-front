@@ -52,6 +52,22 @@ export function fail(contentId){
     });
 }
 
+{/* 프로젝트 승인 :: CheckCard.jsx */}
+export function ok(contentId){
+    axios.get('http://localhost:9999/admin/ok/' + contentId)
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+{/* 프로젝트 거부 :: CheckCard.jsx */}
+export function fail(contentId){
+    axios.get('http://localhost:9999/admin/fail/' + contentId)
+    .catch(error => {
+        console.error(error);
+    });
+}
+
 {/* 작가 이름 불러오기 :: CheckCard.jsx */}
 export function getWriterName(setName, writerId){
     axios.get('http://localhost:9999/admin/getWriterName/' + writerId)

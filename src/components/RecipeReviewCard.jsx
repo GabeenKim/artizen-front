@@ -28,7 +28,7 @@ const ExpandMore = styled((props) => {
 
 function RecipeReviewCard(props) {
   const [expanded, setExpanded] = React.useState(false);
- 
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -37,31 +37,43 @@ function RecipeReviewCard(props) {
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
-              <Avatar sx={{ bgcolor: red[parseInt(props.colorNum)] }} aria-label="recipe">{props.isSuccess}</Avatar> 
+          <Avatar
+            sx={{ bgcolor: red[parseInt(props.colorNum)] }}
+            aria-label="recipe"
+          >
+            {props.isSuccess}
+          </Avatar>
         }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title= {''.concat(' [ ', props.category, ' ] ', props.contentName)}
-        subheader= {''.concat(props.start, ' ~ ',props.end)}
+        title={''.concat(' [ ', props.category, ' ] ', props.contentName)}
+        subheader={''.concat(props.start, ' ~ ', props.end)}
       />
-       <CardMedia
+      <CardMedia
         component="img"
         height="194"
         image="https://picsum.photos/600/400?grayscale"
         alt="Paella dish"
       />
       <CardContent>
-      <Typography>
-          ♥ {props.likes}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" style={{fontSize:"20px", marginTop:"9px"}}>
+        <Typography>♥ {props.likes}</Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          style={{ fontSize: '20px', marginTop: '9px' }}
+        >
           나의 수익률 : <b> {props.percent} % </b>
         </Typography>
-        <Typography variant="body2" color="text.secondary" style={{fontSize:"20px", marginTop:"9px"}}>
-          최종 모집 금액 : <b> {parseInt(props.contentSum).toLocaleString('ko-KR')} 원 </b>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          style={{ fontSize: '20px', marginTop: '9px' }}
+        >
+          최종 모집 금액 :{' '}
+          <b> {parseInt(props.contentSum).toLocaleString('ko-KR')} 원 </b>
         </Typography>
       </CardContent>
     </Card>
