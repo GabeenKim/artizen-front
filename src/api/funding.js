@@ -54,3 +54,13 @@ export function getFundingUserByContentId(contentId,setItems){
     }
     });
 }
+
+export function okDivide(contentId){
+    fetch('http://127.0.0.1:9999/funding/satisfied', {
+          method : "PATCH"   
+      })
+      .then(res=>res.json())
+      .catch((e)=>{
+        console.log(e);
+      });
+  }
