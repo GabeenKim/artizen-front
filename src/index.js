@@ -61,7 +61,13 @@ const router = createBrowserRouter([
     path: '/investTest/result/:id',
     element: <TestResult component={TestResult} />,
   },
+  {
+    path: "/FundingContentDetail/:contentId",
+    element: <FundingContentDetail/>
+  }
 ]);
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

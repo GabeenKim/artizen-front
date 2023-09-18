@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function login(email, password) {
-  return axios.post('http://localhost:9999/account/login', {
+  return axios.post('http://localhost:8080/auth/login', {
     email: email,
     password: password,
   });

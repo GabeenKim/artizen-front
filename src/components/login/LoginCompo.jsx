@@ -1,44 +1,79 @@
 import React, { useState } from 'react';
 import LoginStyle2 from './LoginStyle2.scss'
 import { Outlet, Link } from "react-router-dom"
-import { register } from '../../api/login' // register import
+import { login } from '../../api/login'
 import { useNavigate } from 'react-router-dom'; 
 
-const RegisterCompo = () => {
+const LoginCompo = () => {
   const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(false);
-  const [name, setName] = useState(""); // name 상태 변수 추가
-  const [nickname, setNickname] = useState(""); // nickname 상태 변수 추가
+  const [email, setEmail] = useState(""); // email 상태 변수 추가
   const [password, setPassword] = useState(""); 
-  const [email, setEmail] = useState(""); 
 
   const navigate = useNavigate(); 
 
-  const handleClickAuthorButton= () => {
-    console.log("작가님 버튼 클릭");
-    // 작가님 버튼 클릭 시 처리 로직 추가...
+  const handleClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setActive(true);
+    }, 2200);
   };
 
-   const handleClickSponsorButton= () => {
-    console.log("후원자님 버튼 클릭");
-    // 후원자님 버튼 클릭 시 처리 로직 추가...
-   };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-// ... (기존 코드 생략) ...
+    try {
+      const response = await login(email, password);
+      navigate('/intro'); 
+    } catch (e) {
+      console.error(e); // handle error
+    }
+  };
 
-return (
-   <div className="login">
-     <div className="form">
-       {/* Hello User 대신 작가님과 후원자님 선택용 버튼 두 개로 변경 */}
-       <div>
-         <button onClick={handleClickAuthorButton}>작가님이세요?</button>
-         <button onClick={handleClickSponsorButton}>후원자이세요?</button>
-       </div>
-
-       {/* ... (기존 폼 코드) ... */}
-     </div>
-   </div>
- );
+  return ( 
+    <div class="login">
+      <div class="form">
+        <h2>Hello User</h2>
+        <form onSubmit={handleSubmit}>
+        <div class="form-field">
+          <label for="login-mail"><i class="fa fa-user"></i></label>
+          <input id="login-mail" type="text" value={email} onChange={e => setEmail(e.target.value)} name="mail" placeholder="E-Mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+          <svg>
+            <use href="#svg-check" />
+          </svg>
+        </div>
+        <div class="form-field">
+          <label for="login-password"><i class="fa fa-lock"></i></label>
+          <input id="login-password" value={password} onChange={e => setPassword(e.target.value)} type="password" name="password" placeholder="Password" pattern=".{6,}" required/>
+          <svg>
+            <use href="#svg-check" />
+          </svg>
+        </div>
+        <button type="submit" class="button">
+          <div class="arrow-wrapper">
+            <span class="arrow"></span>
+          </div>
+          <p class="button-text">로그인</p>
+        </button>
+        </form>
+        <Link to={"/register"}>
+        <button type="submit" class="button">
+          <div class="arrow-wrapper">
+            <span class="arrow"></span>
+          </div>
+          <p class="button-text">회원가입</p>
+        </button>
+        </Link>
+      </div>
+      <div class="finished">
+        <svg>
+          <use href="#svg-check" />
+        </svg>
+      </div>
+    </div>
+    
+  );
 };
 
-export default RegisterCompo;
+export default LoginCompo;
