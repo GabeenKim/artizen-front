@@ -55,12 +55,15 @@ export function getFundingUserByContentId(contentId,setItems){
     });
 }
 
+
+{/* 수익금 분배 :: DivideCompo.jsx*/}
 export function okDivide(contentId){
-    fetch('http://127.0.0.1:9999/funding/satisfied', {
-          method : "PATCH"   
-      })
-      .then(res=>res.json())
-      .catch((e)=>{
-        console.log(e);
-      });
-  }
+    return axios.put("http://127.0.0.1:9999/funding/satisfied/" + contentId, {
+  }).catch(err => console.log(err));
+}
+
+{/* 환불 :: DivideCompo.jsx*/}
+export function failDivide(contentId){
+    return axios.put("http://127.0.0.1:9999/funding/notSatisfied/" + contentId, {
+  }).catch(err => console.log(err));
+}
