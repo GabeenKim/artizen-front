@@ -48,7 +48,7 @@ export default function DivideCompo(props){
                     props.setFails(props.fails.filter(fail => fail.contentId !== contentId))
 
                     Swal.fire(
-                    '수익 분배 완료!',
+                    '환불 처리 완료!',
                     '',
                     'success'
                     )
@@ -73,7 +73,7 @@ export default function DivideCompo(props){
                     props.setOks(props.oks.filter(ok => ok.contentId !== contentId));
                 
                     Swal.fire(
-                    '환불 처리 완료!',
+                    '수익 분배 완료!',
                     '',
                     'success'
                     )
@@ -125,9 +125,9 @@ export default function DivideCompo(props){
                 </>
             : 
              <>
-                <Wrap>
-                    <Button variant="outlined" color="error" sx={{width: "100%",padding: "10px"}} onClick={handleClickFailOpen}>환불</Button>
-                </Wrap>
+                
+                    <Button variant="contained" color="error" sx={{width: "30%", padding: "10px"}} onClick={handleClickFailOpen}>환불</Button>
+                
                 <Dialog
                     open={openFail}
                     onClose={handleFailClose}
