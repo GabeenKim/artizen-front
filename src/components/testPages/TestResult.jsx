@@ -136,18 +136,33 @@ function TestResult() {
           </p>
           <p>{character.description[4].des}</p>
         </div>
-
-        <p style={{ marginTop: '60px', fontSize: '20px' }}>
-          테스트를 다시하고 싶다면?
-        </p>
-        <Link to={'/investTest'}>
-          <TestText>처음으로 돌아가기</TestText>
-        </Link>
+        <div style={{ display: 'flex' }}>
+          <Div2>
+            <p style={{ marginTop: '60px', fontSize: '20px' }}>
+              Artizen이 궁금하다면?
+            </p>
+            <Link to={'/'}>
+              <TestText>메인 화면으로 가기</TestText>
+            </Link>
+          </Div2>
+          <Div2>
+            <p style={{ marginTop: '60px', fontSize: '20px' }}>
+              테스트를 다시하고 싶다면?
+            </p>
+            <Link to={'/investTest'}>
+              <TestText>처음으로 돌아가기</TestText>
+            </Link>
+          </Div2>
+        </div>
       </div>
       <Footer style={{ position: 'absolute', bottom: '0' }} />
     </Body>
   );
 }
+
+const Div2 = styled.div`
+  width: 50%;
+`;
 
 const TestText = styled.button`
   height: 60px;

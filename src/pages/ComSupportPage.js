@@ -29,7 +29,7 @@ function ComSupportPage(props) {
   };
 
   return (
-    <div style={{ width: '75%', margin: '1rem auto' }}>
+    <div style={{ width: '75%', height :'100vh' ,margin: '1rem auto' }}>
       <div id="rankTitle1">
         <h2>이달의 펀드왕</h2>
         <h1>TOP 3</h1>
