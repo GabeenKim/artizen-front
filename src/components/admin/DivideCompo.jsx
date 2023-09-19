@@ -57,7 +57,8 @@ export default function DivideCompo(props){
     };
 
     {/* 수익 분배 */}
-    const clickAgree = (contentId) => {
+    const clickAgree = async (contentId) => {
+       
         Swal.fire({
             title: '[재확인] 수익 분배 하시겠습니까?',
             text: "다시 되돌릴 수 없습니다. 신중하세요.",

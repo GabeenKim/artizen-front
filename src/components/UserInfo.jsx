@@ -14,6 +14,7 @@ function UserInfo() {
     const [password, setPassword] = useState("*******");
     const [account, setAccount] = useState("");
     const [interest, setInterest] = useState("");
+    const [character, setCharacter] = useState("");
     const [bank, setBank] = useState("");
 
     const [myMoney, setMyMoney] = useState(0);
@@ -39,6 +40,7 @@ function UserInfo() {
                     setInterest(res["interests"]);
                     setAccount(res["userInfo"]["accounts"]);
                     setBank(res["userInfo"]["bank"]);
+                    setCharacter(res["character"]);
                     if(res["userInfo"]["accounts"] != null) {
                         accountInput.current.disabled = true;
                     }
@@ -231,8 +233,8 @@ function UserInfo() {
                         <div>
                             {/* 닉네임 */}
                             <NickNameBox>
-                                <p>{nickname}</p>
-                                <Button onClick={handleNickNameModal}>닉네임 변경</Button>
+                                <p>{character}</p>
+                                {/* <Button onClick={handleNickNameModal}>닉네임 변경</Button>
                                 <Dialog open={isNickNameOpen} onClose={handleNickNameModal}>
                                     <DialogTitle>닉네임 변경</DialogTitle>
                                     <br></br>
@@ -242,7 +244,7 @@ function UserInfo() {
                                     <DialogActions>
                                         <Button variant="contained" color="primary" onClick={handleNickNameSubmit}>변경</Button>
                                     </DialogActions>
-                                </Dialog>    
+                                </Dialog>     */}
                             </NickNameBox>
                            
                             {/* 계좌 입출금 */}
