@@ -1,22 +1,30 @@
-import styled from "styled-components";
 import Footer from "../components/Footer";
 import GalleryDiv from "../components/GalleryDiv";
 import MenuBar from "../components/MenuBar";
 import SwiperDiv from "../components/SwiperDiv";
 import { ContainerBody } from "../styles/BodyStyle";
-import WriterDiv from "../components/WriterDiv";
-import { writerDummyData } from '../assets/writerDummyData';
+import WriterDiv from "../components/home/WriterDiv";
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import { useNavigate } from "react-router-dom";
 import{gsap} from 'gsap';
 import {useEffect,useState} from 'react';
 import '../styles/home.scss'
 
-
 export default function Home(){
+    const navigate = useNavigate();
+
     var list = ["/img/mainLogo.png", "https://picsum.photos/1000/600"];
     var link = ["/intro", "/event"]
     var widths1 = ["25%", "25%", "50%"]
     var widths2 = ["50%", "25%", "25%"]
 
+    const actions = [
+        { icon: <TrendingUpIcon />, name: '투자 컨텐츠 작성하기', link: '/funding-write' },
+        { icon: <CardGiftcardIcon />, name: '후원 컨텐츠 작성하기', link: '/support-write' },
+    ];
 // 로그인 localStorage 정보
 // localStorage.setItem("userId", 1);
 // localStorage.setItem("infoId", 1);
@@ -25,10 +33,7 @@ export default function Home(){
 
 // 로그아웃
 // localStorage.clear();
-
-
-
-    const [visited, setVisited] = useState(false);
+const [visited, setVisited] = useState(false);
 
   useEffect(() => {
     if(sessionStorage.getItem('visited')){
@@ -150,36 +155,46 @@ if(!visited){
     </section>
 )
     }
-
 return (
     <div>
-       
-
-    
-        <section className="hero">
         <MenuBar/>
-            <ContainerBody>
-                <SwiperDiv height={100} list={list} link={link}/>
-                <p>작가</p>
-                <div style={{display:"flex", justifyContent:"center"}}>
-                <WriterDiv writers={writerDummyData}/>
-                </div>
-                <div style={{display:"flex", justifyContent:"center", width:"100%"}}>
-                <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
-                &nbsp;
-                {
-                    localStorage.getItem("name") != null ?
-                    <GalleryDiv widths={widths1} data={dummyData} isRecomm={true}/> : null
-                }
-                <GalleryDiv title={"주목할만한 펀딩 목록"} widths={widths1} data={dummyData}/>
-                <GalleryDiv title={"완료된 펀딩"} widths={widths2} data={dummyData}/>
-                </div>
-                </div>
-            </ContainerBody>
-            <Footer/>
-        </section>
-  
+        <ContainerBody>
+            <SwiperDiv height={100} list={list} link={link}/>
+            <div style={{display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", marginTop:"20px"}}>
+            <p>주목할만한 작가</p>
+            <WriterDiv/>
+            </div>
+            <div style={{display:"flex", justifyContent:"center", width:"100%"}}>
+            <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+            &nbsp;
+            {
+                localStorage.getItem("name") != null ?
+                <GalleryDiv widths={widths1} data={dummyData} isRecomm={true}/> : null
+            }
+            <GalleryDiv title={"주목할만한 펀딩 목록"} widths={widths1} data={dummyData}/>
+            <GalleryDiv title={"완료된 펀딩"} widths={widths2} data={dummyData}/>
+            </div>
+            </div>
+            {
+                localStorage.getItem('writerId') &&
+                <SpeedDial
+                ariaLabel="SpeedDial openIcon example"
+                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+                >
+                {actions.map((action) => (
+                    <SpeedDialAction
+                    key={action.name}
+                    icon={action.icon}
+                    tooltipTitle={action.name}
+                    onClick={()=>{navigate(action.link)}}
+                    />
+                ))}
+                </SpeedDial>
+            }
+
+        </ContainerBody>
+        <Footer/>
     </div>
 )
 }
-
