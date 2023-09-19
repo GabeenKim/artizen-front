@@ -20,6 +20,7 @@ import SupportWritePage from './contentpage/SupportWritePage';
 import MorePage from './contentpage/MorePage';
 import AdminPage from './pages/admin/AdminPage';
 import FundingContentDetail from './pages/FundingContentDetail';
+import WriterPage from './pages/WriterPage';
 
 const router = createBrowserRouter([
   {
@@ -85,7 +86,11 @@ const router = createBrowserRouter([
   {
     path: "/FundingContentDetail/:contentId",
     element: <FundingContentDetail/>
-  }
+  },
+  {
+    path: '/writer/:writerId',
+    element: <WriterPage />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
