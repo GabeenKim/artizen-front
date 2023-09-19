@@ -175,11 +175,18 @@ function PostWritePage(props) {
                 endDay: endDate.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),  // ISO 8601 형식으로 변환
                 writerId:2,
                 supportContents: { 
-                   
+                    contentId : 1,
                     detail: contentDetail, 
                     teamDetail : teamDetail,
                     planDetail : planDetail
-                }
+                },
+                gift: [
+                    {
+                        criterion: 5000,
+                        giftList: "햄토리 랜덤박스",
+                        ticketCnt: 1
+                    }
+                ]
         });
 
             console.log(response.data); // 성공적으로 추가된 데이터 확인
@@ -344,10 +351,11 @@ function PostWritePage(props) {
                             event.preventDefault();
 
                             // handleSubmit 함수 호출
-                            await handleSubmit(event);
+                           await handleSubmit(event);
+                          
                             setOpenConfirm(false);
                             setOpenSuccess(true);
-                           
+                        
                         }} type="submit" autoFocus>
                           동의합니다. </Button>
                         </DialogActions>

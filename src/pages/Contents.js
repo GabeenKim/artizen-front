@@ -66,11 +66,11 @@ export default function Contents(){
                 )}
                 </ButtonContainer>
 
-                <Title><h2>영화</h2><p onClick={() => navigate("/more")} id="movie">더보기&gt;</p></Title>
+                <Title><h2>영화</h2><p onClick={() => navigate("/more",  { state: { category: 'movie' } })}  id="movie">더보기&gt;</p></Title>
                 <SwiperMultipleDiv data={data}></SwiperMultipleDiv>
-                <Title><h2>공연</h2><p onClick={clickMore} id="show">더보기&gt;</p></Title>
+                <Title><h2>공연</h2><p onClick={() => navigate("/more",  { state: { category: 'show' } })}  id="show">더보기&gt;</p></Title>
                 <SwiperMultipleDiv data={data}></SwiperMultipleDiv>
-                <Title><h2>전시</h2><p onClick={clickMore} id="exhibit">더보기&gt;</p></Title>
+                <Title><h2>전시</h2><p onClick={() => navigate("/more",  { state: { category: 'exhibition' } })}   id="exhibition">더보기&gt;</p></Title>
                 <SwiperMultipleDiv data={data}></SwiperMultipleDiv>
             </ContainerBody>
             <Footer/>
