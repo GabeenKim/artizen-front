@@ -4,7 +4,7 @@ import '../../App.css';
 function RankUser({ id, name, totalPrice, img }) {
   return (
     <div className="cardContainer">
-      <img src={img} alt="movie" />
+      <img style={{borderRadius : '100px'}} src={img} alt="movie" />
       <div
         style={{
           display: 'flex',
@@ -18,7 +18,7 @@ function RankUser({ id, name, totalPrice, img }) {
             width: '100%',
           }}
         >
-          <h2>{name}</h2>
+          <h2 style={{lineHeight : '50px',marginTop:'0px',height : '50px' ,backgroundColor : '#ff8a8a', color:'white'}}>{name}</h2>
         </div>
       </div>
 

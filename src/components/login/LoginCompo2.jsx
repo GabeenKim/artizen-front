@@ -20,7 +20,19 @@ const LoginCompo2 = () => {
       localStorage.setItem('infoId',response.data.userInfo.infoId);
       localStorage.setItem('name',response.data.userInfo.name);
       const storedUserId = localStorage.getItem('userId');
-      navigate('/intro'); 
+      
+      fetch(
+        `http://localhost:9999/account/showUser/${response.data.userInfo.infoId}`
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result.character);
+          if(result.character == null){
+            navigate('/investTest'); 
+          }else{
+            navigate('/intro'); 
+          }
+        });
     } catch (e) {
       console.error(e); // handle error
     }
