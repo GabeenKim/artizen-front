@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import LoginCompo from "../components/LoginCompo";
+import LoginCompo2 from "../components/login/LoginCompo2";
 
 export default function Login(){
     return(
         <Body>
-            <LoginCompo/>
+            <LoginCompo2/>
         </Body>
     )
 }

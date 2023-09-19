@@ -1,7 +1,10 @@
 import React from 'react';
-import AdminSiderbar from '../../components/admin/AdminSiderbar';
 import { useEffect, useState } from 'react';
+import Footer from "../../components/Footer";
+import MenuBar from "../../components/MenuBar";
+import AdminSiderbar from '../../components/admin/AdminSiderbar';
 import AdminCheckList from '../../components/admin/AdminCheckList';
+import AdminDivideList from '../../components/admin/AdminDivideList';
 
 function AdminPage(){
     const [sidebar, setSidebar] = useState("/home");
@@ -13,13 +16,17 @@ function AdminPage(){
 
     return (
         <div style={{width:"100%"}}>
+            <MenuBar/>
             <AdminSiderbar setSidebar={setSidebar}/>     
             {
                 sidebar == "/home" ?
                 <h2>home</h2> :
                 sidebar == "/project" ?
-                <AdminCheckList/> : null
+                <AdminCheckList/> : <AdminDivideList/>
             }
+            <div style={{marginTop:"100px"}}>
+            </div>
+            <Footer/>
         </div>
     )
 }

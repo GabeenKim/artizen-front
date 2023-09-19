@@ -25,28 +25,36 @@ export function userList(setUsers){
     })
     .then(res=>res.json())
     .then(res=>{
-    try{
-        const currentUser = [];
-        res.map((item) => currentUser.push(item));
-        let newArray = [...currentUser];
-        setUsers(newArray);
-    }catch(err){
-        console.log(err);
-    }
-    });
-}
-
-{/* 프로젝트 승인 :: CheckCard.jsx */}
-export function ok(contentId){
-    axios.get('http://localhost:9999/admin/ok/' + contentId)
-    .catch(error => {
-        console.error(error);
+        try{
+            const currentUser = [];
+            res.map((item) => currentUser.push(item));
+            let newArray = [...currentUser];
+            setUsers(newArray);
+        }catch(err){
+            console.log(err);
+        }
+        try{
+            const currentUser = [];
+            res.map((item) => currentUser.push(item));
+            let newArray = [...currentUser];
+            setUsers(newArray);
+        }catch(err){
+            console.log(err);
+        }
     });
 }
 
 {/* 프로젝트 거부 :: CheckCard.jsx */}
 export function fail(contentId){
     axios.get('http://localhost:9999/admin/fail/' + contentId)
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+{/* 프로젝트 승인 :: CheckCard.jsx */}
+export function ok(contentId){
+    axios.get('http://localhost:9999/admin/ok/' + contentId)
     .catch(error => {
         console.error(error);
     });

@@ -15,6 +15,11 @@ import Register from './pages/Register';
 import TestStart from './pages/TestStart';
 import TestOption from './components/testPages/TestOption';
 import TestResult from './components/testPages/TestResult';
+import FundingWritePage from './contentpage/FundingWritePage';
+import SupportWritePage from './contentpage/SupportWritePage';
+import MorePage from './contentpage/MorePage';
+import AdminPage from './pages/admin/AdminPage';
+import FundingContentDetail from './pages/FundingContentDetail';
 
 const router = createBrowserRouter([
   {
@@ -61,6 +66,26 @@ const router = createBrowserRouter([
     path: '/investTest/result/:id',
     element: <TestResult component={TestResult} />,
   },
+  {
+    path: '/funding-write',
+    element: <FundingWritePage />,
+  },
+  {
+    path: '/support-write',
+    element: <SupportWritePage />,
+  },
+  {
+    path: '/more',
+    element: <MorePage />,
+  },
+  {
+    path: '/admin',
+    element: <AdminPage/>,
+  },
+  {
+    path: "/FundingContentDetail/:contentId",
+    element: <FundingContentDetail/>
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
