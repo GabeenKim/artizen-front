@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
@@ -12,21 +13,27 @@ import { ContainerBody } from "../styles/BodyStyle";
 
 
   export default function MovieList() {
+    
+    const location = useLocation();
+    const categoryFromState = location.state?.category;
+    const getContentList = async () => {
+      const resp = await axios.get(`http://10.10.221.40:9999/poster/showAllContents`);
+      const filteredData = resp.data.filter(content => content.category === categoryFromState); // Filter data by category
+      setContentList(filteredData);
+  }
+
 
     const navigate = useNavigate();
     const [contentList, setContentList] = useState([]);
-   
-
-
-    const getContentList = async () => {
-        const resp = await (axios.get('http://10.10.221.40:9999/poster/showAllContents')); // 2) 게시글 목록 데이터에 할당  
-        setContentList(resp.data); // 3) boardList 변수에 할당
-        console.log(resp.data);
-        }
+    // const getContentList = async () => {
+    //     const resp = await (axios.get(`http://10.10.221.40:9999/poster/showAllContents`)); // 2) 게시글 목록 데이터에 할당  
+    //     setContentList(resp.data); // 3) boardList 변수에 할당
+    //     console.log(resp.data);
+    //     }
     
-        useEffect(() => {
+    useEffect(() => {
         getContentList(); // 1) 게시글 목록 조회 함수 호출
-        }, []);
+    }, []);
 
 
     const rows = contentList.map((content) => ({
@@ -69,14 +76,18 @@ import { ContainerBody } from "../styles/BodyStyle";
                   rows={rows}
                   rowHeight={100} 
                   columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 7 },
+                    },
+                  }}
                   pageSizeOptions={[5,10]}
-                  pageSize={5} 
                   checkboxSelection
                   />
           </Container>
-        <Footer/>
         </ContainerBody>
-
+        
+        <Footer/>
         </>
       );
   }

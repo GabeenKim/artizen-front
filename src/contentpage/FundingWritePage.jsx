@@ -182,8 +182,16 @@ function PostWritePage(props) {
                     detail: contentDetail, 
                     productionCost:productionCost, 
                     purpose:purpose, 
-                    minInvest:minInvest 
-                }
+                    minInvest:minInvest,
+                    contentId : 1
+                },
+                gift: [
+                    {
+                        criterion: 5000,
+                        giftList: "햄토리 랜덤박스",
+                        ticketCnt: 1
+                    }
+                ]
         });
 
             console.log(response.data); // 성공적으로 추가된 데이터 확인
@@ -371,26 +379,26 @@ function PostWritePage(props) {
                         </DialogActions>
                     </Dialog>
                     <Dialog
-                        open={openSuccess}
-                        onClose={handleCloseSuccess}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                        >
-                        <DialogTitle id="alert-dialog-title">
-                        {"게시글 등록 요청이 성공되었습니다"}
-                        </DialogTitle>
+                    open={openSuccess}
+                    onClose={handleCloseSuccess}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    >
+                    <DialogTitle id="alert-dialog-title">
+                    {"게시글 등록 요청이 성공되었습니다"}
+                    </DialogTitle>
 
-                        <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            관리자 승인 후 게시물이 등록됩니다.
-                        </DialogContentText>
-                        </DialogContent>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        관리자 승인 후 게시물이 등록됩니다.
+                    </DialogContentText>
+                    </DialogContent>
 
-                        {/* "확인하였습니다." 버튼 클릭 시 메인 페이지로 이동 */}
-                        <DialogActions>
-                            <Button onClick={handleCloseSuccess}>확인하였습니다.</Button>
-                        </DialogActions>
-                    </Dialog> 
+                    {/* "확인하였습니다." 버튼 클릭 시 메인 페이지로 이동 */}
+                    <DialogActions>
+                        <Button onClick={handleCloseSuccess}>확인하였습니다.</Button>
+                    </DialogActions>
+                </Dialog> 
                 </RightSide>
             </Container>
             </form>
