@@ -2,6 +2,7 @@ import React from 'react';
 import '../../App.css';
 
 function RankingCard({
+  id,
   contentName,
   contentSum,
   category,
@@ -12,21 +13,22 @@ function RankingCard({
 }) {
   return (
     <div className="">
-      <div className="ranking-item">
-        <img src={img} alt="movie" href="#"></img>
+      <div className="ranking-item" >
+        <img src={img} alt="movie" ></img>
         <div className="ranking-content">
           {/* span에서 div로 변경 */}
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div
-              id="card-title"
+              id="card-title2"
               style={{
-                width: '100%',
+                width: '100%'
               }}
             >
-              <h2>{contentName}</h2>
+              <h2 style={{ textDecoration: 'none' }}>
+                <a style={{ textDecoration: 'none', color: 'inherit', fontSize:'20px' }} href={`/FundingContentDetail/${id}`}>{contentName}</a></h2>
             </div>
-            <div id="card-rate" style={{ marginLeft: '20px', width: '100%' }}>
-              <span>수익률 : {contentSum}</span>
+            <div id="card-rate" style={{ marginLeft: '20px',marginTop:'0px', width: '100%' }}>
+              <span>수익률 : {parseInt(contentSum).toLocaleString()} 원 </span>
             </div>
           </div>
 

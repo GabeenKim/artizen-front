@@ -3,7 +3,7 @@ import "./uploader.scss";
 import Button from '@mui/joy/Button';
 import axios from 'axios';
 
-const Uploader = () => {
+const Uploader = ({onUpload}) => {
 
   const [image, setImage] = useState({
     image_file: "",
@@ -14,6 +14,7 @@ const Uploader = () => {
 
   const saveImage = (e) => {
     e.preventDefault();
+    console.log("이미지 프리뷰")
     const fileReader = new FileReader();
     
     if(e.target.files[0]){
@@ -37,25 +38,33 @@ const Uploader = () => {
     });
   }
 
-  const sendImageToServer = async () => {
+  const sendImageToServer = async (e) => {
+    e.preventDefault();
     if(image.image_file){
       const formData = new FormData()
-      formData.append('file', image.image_file);
-      await axios.post('/api/image/upload', formData);
-      alert("서버에 등록이 완료되었습니다!");
-      setImage({
-        image_file: "",
-        preview_URL: "img/default_image.png",
-      });
+    
+      formData.append('uploadFile', image.image_file);
+      
+      fetch('http://localhost:9999/image/upload', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        
+       
+        onUpload(data);
+        
+      }).catch(error => {
+        console.log(error);
+      })
     }
-    else{
-      alert("사진을 등록하세요!")
-    }
+     
   }
 
   return (
     <div className="uploader-wrapper">
-      <input type="file" accept="image/*"
+      <input type="file" accept="image/*" 
         onChange={saveImage}
         // 클릭할 때 마다 file input의 value를 초기화 하지 않으면 버그가 발생할 수 있다
         // 사진 등록을 두개 띄우고 첫번째에 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!

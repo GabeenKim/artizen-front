@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import Footer from '../Footer';
 import MenuBar from '../MenuBar';
 import styled from 'styled-components';
-
+import { ContainerBody, LastOuterContainer } from "../../styles/BodyStyle";
 import ResultChar from './result.json';
 
 function TestResult() {
@@ -28,17 +28,19 @@ function TestResult() {
     .then((result) => console.log(result));
 
   return (
-    <Body>
+    <LastOuterContainer>
       <MenuBar />
-      <div
+      <ContainerBody>
+        <div>
+        <div
         style={{
-          width: '50%',
-          height: '120%',
+          width: '30%',
+          height: '50%',
           margin: '0px auto',
           paddingTop: '150px',
 
           textAlign: 'center',
-
+          boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
           backgroundColor: 'white',
         }}
       >
@@ -138,7 +140,7 @@ function TestResult() {
         </div>
         <div style={{ display: 'flex' }}>
           <Div2>
-            <p style={{ marginTop: '60px', fontSize: '20px' }}>
+            <p style={{fontSize: '15px' }}>
               Artizen이 궁금하다면?
             </p>
             <Link to={'/'}>
@@ -146,22 +148,25 @@ function TestResult() {
             </Link>
           </Div2>
           <Div2>
-            <p style={{ marginTop: '60px', fontSize: '20px' }}>
+            <p style={{fontSize: '15px'}}>
               테스트를 다시하고 싶다면?
             </p>
-            <Link to={'/investTest'}>
+            <Link to={'/investTest'} style={{marginTop:"10px"}}>
               <TestText>처음으로 돌아가기</TestText>
             </Link>
           </Div2>
         </div>
       </div>
+        </div>
+        </ContainerBody>
       <Footer style={{ position: 'absolute', bottom: '0' }} />
-    </Body>
+    </LastOuterContainer>
   );
 }
 
 const Div2 = styled.div`
   width: 50%;
+  
 `;
 
 const TestText = styled.button`

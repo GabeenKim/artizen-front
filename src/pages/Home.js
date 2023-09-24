@@ -2,7 +2,7 @@ import Footer from "../components/Footer";
 import GalleryDiv from "../components/GalleryDiv";
 import MenuBar from "../components/MenuBar";
 import SwiperDiv from "../components/SwiperDiv";
-import { ContainerBody } from "../styles/BodyStyle";
+import { ContainerBody, LastOuterContainer } from "../styles/BodyStyle";
 import WriterDiv from "../components/home/WriterDiv";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import{gsap} from 'gsap';
 import {useEffect,useState} from 'react';
 import '../styles/home.scss'
+import { getEndedContents, getNotableContents, getNotableContents2 } from "../api/funding";
+import GalleryRecommDiv from "../components/GalleryRecmmDiv";
 
 export default function Home(){
     const navigate = useNavigate();
@@ -25,6 +27,11 @@ export default function Home(){
         { icon: <TrendingUpIcon />, name: '투자 컨텐츠 작성하기', link: '/funding-write' },
         { icon: <CardGiftcardIcon />, name: '후원 컨텐츠 작성하기', link: '/support-write' },
     ];
+
+    const [notableContents, setNotableContents] = useState([]);
+    const [notableContents2, setNotableContents2] = useState([]);
+    const [endedContents, setEndedContents] = useState([]);
+
 // 로그인 localStorage 정보
 // localStorage.setItem("userId", 1);
 // localStorage.setItem("infoId", 1);
@@ -35,113 +42,102 @@ export default function Home(){
 // localStorage.clear();
 const [visited, setVisited] = useState(false);
 
-  useEffect(() => {
-    if(sessionStorage.getItem('visited')){
-      setVisited(true);
-    } else {
-        const animationOptions = {
-        ease: 'expo.inOut'
-        };
-        const introAnimation = () => {
-            const tl = gsap.timeline({
-                defaults: {
-                    ease: animationOptions.ease,
-                    duration: 0.7,
-                }
-            });
-            
-            tl.to('.intro__title', {
-                duration: 1,
-                y: 0,
-                autoAlpha: 1,
-                delay: 0.5,
-            })
-            .to('.intro__background--left, .intro__background--right', {
-                scaleX: 1,
-            })
-            .to('.intro__background--left, .intro__background--right', {
-                scaleY: 0,
-                transformOrigin: 'top center',
-            })
-            .to('.intro__title', {
-                duration: 1,
-                y: -60,
-                autoAlpha: 0,
-            }, '-=0.6')
-            .to('.intro', {
-                y: '-100%',
-                onComplete : () => {sessionStorage.setItem('visited',"true"); setVisited(true);}
-            }, '-=0.5')
-            
-            return tl;
-        }
-        const skewInElements = elements => {
-            const tl = gsap.timeline();
-            
-            tl.from(elements, {
-                duration: 1,
-                ease: animationOptions.ease,
-                skewY: -5,
-                autoAlpha: 0,
-                y: 40,
-            })
-            
-            return tl;
-        }
-    
-    
-        const fadeInElements = elements => {
-            const tl = gsap.timeline();
-            
-            tl.from(elements, {
-                duration: 1,
-                ease: animationOptions.ease,
-                y: '20px',
-                autoAlpha: 0,
-                stagger: 0.1,
-            })
-            
-            return tl;
-        }
-        
-        const master = gsap.timeline({
-            paused: false,
-            delay: 0.2,
-        });
-    
-        master
-            .add(introAnimation())
-            .add(fadeInElements('.header__logo, .header__nav a'))
-            .add(skewInElements('h1, .hero__col--2 img'), '-=1')
-    }
-    }, []);
+useEffect(() => {
+  if(sessionStorage.getItem('visited')){
+    setVisited(true);
+  } 
+  else {
+      const animationOptions = {
+      ease: 'expo.inOut'
+      };
+      const introAnimation = () => {
+          const tl = gsap.timeline({
+              defaults: {
+                  ease: animationOptions.ease,
+                  duration: 0.7,
+              }
+          });
+
+          tl.to('.intro__title', {
+              duration: 1,
+              y: 0,
+              autoAlpha: 1,
+              delay: 0.5,
+          })
+          .to('.intro__background--left, .intro__background--right', {
+              scaleX: 1,
+          })
+          .to('.intro__background--left, .intro__background--right', {
+              scaleY: 0,
+              transformOrigin: 'top center',
+          })
+          .to('.intro__title', {
+              duration: 1,
+              y: -60,
+              autoAlpha: 0,
+          }, '-=0.6')
+          .to('.intro', {
+              y: '-100%',
+              onComplete : () => {sessionStorage.setItem('visited',"true"); setVisited(true);}
+          }, '-=0.5')
+
+          return tl;
+      }
+      const skewInElements = elements => {
+          const tl = gsap.timeline();
+
+          tl.from(elements, {
+              duration: 1,
+              ease: animationOptions.ease,
+              skewY: -5,
+              autoAlpha: 0,
+              y: 40,
+          })
+
+          return tl;
+      }
 
 
-var dummyData = [
-    {
-        "contentId":1,
-        "image": "https://picsum.photos/500/300?grayscale​",
-        "attainment":33,
-        "category": "전시",
-        "remainDay": 20,
-        "contentName": "한 마음 전시회",
-    },{
-        "contentId":2,
-        "image": "https://picsum.photos/500/300",
-        "attainment":55,
-        "category": "후원",
-        "remainDay": 10,
-        "contentName": "제22회 서울카페쇼 2023",
-    },
-    {
-        "contentId":3,
-        "image": "https://picsum.photos/600/400?grayscale​",
-        "attainment":53,
-        "category": "전시",
-        "remainDay": 10,
-        "contentName": "스누피 전시회",
-    }
-]
+      const fadeInElements = elements => {
+          const tl = gsap.timeline();
+
+          tl.from(elements, {
+              duration: 1,
+              ease: animationOptions.ease,
+              y: '20px',
+              autoAlpha: 0,
+              stagger: 0.1,
+          })
+
+          return tl;
+      }
+
+      const master = gsap.timeline({
+          paused: false,
+          delay: 0.2,
+      });
+
+      master
+          .add(introAnimation())
+          .add(fadeInElements('.header__logo, .header__nav a'))
+          .add(skewInElements('h1, .hero__col--2 img'), '-=1')
+  }
+
+    getNotableContents()
+    .then((res)=>res.json())
+    .then((res)=>setNotableContents(res))
+    .catch((e)=>console.log(e));
+
+    getNotableContents2()
+    .then((res)=>res.json())
+    .then((res)=>setNotableContents2(res))
+    .catch((e)=>console.log(e));
+
+    getEndedContents()
+    .then((res)=>res.json())
+    .then((res)=>setEndedContents(res))
+    .catch((e)=>console.log(e))
+  }, []);
 
 if(!visited){
     return (
@@ -156,23 +152,25 @@ if(!visited){
 )
     }
 return (
-    <div>
+    <LastOuterContainer>
         <MenuBar/>
         <ContainerBody>
-            <SwiperDiv height={100} list={list} link={link}/>
+            <SwiperDiv height={350} list={list} link={link}/>
             <div style={{display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", marginTop:"20px"}}>
             <p>주목할만한 작가</p>
             <WriterDiv/>
             </div>
             <div style={{display:"flex", justifyContent:"center", width:"100%"}}>
-            <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+            <div style={{display:"flex", flexDirection:"column", alignItems:"center", width:'70%'}}>
             &nbsp;
-            {
+            <div style={{height: '100px', width:'10px'}}></div>
+            {/* {
                 localStorage.getItem("name") != null ?
-                <GalleryDiv widths={widths1} data={dummyData} isRecomm={true}/> : null
-            }
-            <GalleryDiv title={"주목할만한 펀딩 목록"} widths={widths1} data={dummyData}/>
-            <GalleryDiv title={"완료된 펀딩"} widths={widths2} data={dummyData}/>
+                <GalleryRecommDiv fundingData={notableContents} supportData={notableContents2} widths={widths2}/> : null
+            } */}
+            <GalleryDiv title={"주목할만한 펀딩 목록"} widths={widths1} data={notableContents} isFunding={true}/>
+            <GalleryDiv title={"주목할만한 후원 목록"} widths={widths2} data={notableContents2} isFunding={false}/>
+            <GalleryDiv title={"완료된 펀딩"} widths={widths1} data={endedContents} isEnded={true}/>
             </div>
             </div>
             {
@@ -195,6 +193,6 @@ return (
 
         </ContainerBody>
         <Footer/>
-    </div>
+    </LastOuterContainer>
 )
 }

@@ -85,8 +85,6 @@ export default function DivideCompo(props){
     return(
         <OuterContainer>
         <Container>
-            {/* <Investors isSuccess={isSuccess} contentId={contentId}/> */}
-            {/* <SuccessFunding/> */}
             <Investors isSuccess={isSuccess} contentId={props.contentId} />
             <>
                 {
@@ -127,7 +125,7 @@ export default function DivideCompo(props){
             : 
              <>
                 
-                    <Button variant="contained" color="error" sx={{width: "30%", padding: "10px"}} onClick={handleClickFailOpen}>환불</Button>
+                <Button variant="contained" color="error" sx={{width: "30%", padding: "10px"}} onClick={handleClickFailOpen}>환불</Button>
                 
                 <Dialog
                     open={openFail}

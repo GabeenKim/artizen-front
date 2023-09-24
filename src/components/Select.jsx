@@ -16,9 +16,9 @@ const CustomSelect = ({setBank}) => {
       <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
         <Label>{currentValue}</Label>
         <SelectOptions show={showOptions}>
-          <Option onClick={handleOnChangeSelectValue}>신한</Option>
-          <Option onClick={handleOnChangeSelectValue}>하나</Option>
           <Option onClick={handleOnChangeSelectValue}>국민</Option>
+          <Option onClick={handleOnChangeSelectValue}>하나</Option>
+          <Option onClick={handleOnChangeSelectValue}>신한</Option>
         </SelectOptions>
       </SelectBox>
     )

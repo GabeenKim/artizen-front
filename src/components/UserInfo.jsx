@@ -7,6 +7,7 @@ import CustomSelect from './Select';
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
+import Swal from "sweetalert2";
 
 function UserInfo() {
     const [nickname, setNickName] = useState(localStorage.getItem('nickname'));
@@ -44,6 +45,9 @@ function UserInfo() {
                     if(res["userInfo"]["accounts"] != null) {
                         accountInput.current.disabled = true;
                     }
+
+                    localStorage.setItem("balance", res["userInfo"]["balance"]);
+                    
                 }catch(err){
                     console.log(err);
                 }
@@ -91,7 +95,7 @@ function UserInfo() {
             })
             .catch(err => {
                 console.error(err);
-            });;
+            });
 
             setIsAddOpen(!isAddOpen);
         }
@@ -201,20 +205,19 @@ function UserInfo() {
             "Content-Type": "application/json"
             },
             method: "POST",	
-
             body: JSON.stringify({
                 infoId: localStorage.getItem("infoId"),
                 accounts: account,
                 bank: bank
             })
         })
-        .then(function (data) {
-            console.log(data);
+        .then(function () {
+            alert("계좌 등록 완료!");
         })
         .catch(err => {
             console.error(err);
-        });;
-        
+        });
+
         
     }
 
@@ -233,18 +236,11 @@ function UserInfo() {
                         <div>
                             {/* 닉네임 */}
                             <NickNameBox>
-                                <p>{character}</p>
-                                {/* <Button onClick={handleNickNameModal}>닉네임 변경</Button>
-                                <Dialog open={isNickNameOpen} onClose={handleNickNameModal}>
-                                    <DialogTitle>닉네임 변경</DialogTitle>
-                                    <br></br>
-                                    <DialogContent>
-                                        <TextField label="변경할 닉네임" type='text' onChange={handleNickNameValue}/>
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button variant="contained" color="primary" onClick={handleNickNameSubmit}>변경</Button>
-                                    </DialogActions>
-                                </Dialog>     */}
+                                {
+                                    Object.keys(localStorage).includes('writerId') == false ? 
+                                    <p>{character}</p> :
+                                    <p>나는 작가야</p>
+                                }
                             </NickNameBox>
                            
                             {/* 계좌 입출금 */}
@@ -313,7 +309,6 @@ function UserInfo() {
                         <AccountInfoButton> 등록 </AccountInfoButton> 
                 </AccountInfoForm>
             </ProFileBox>
-            
         </Box>
     )
 }
@@ -324,7 +319,7 @@ const Box = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 55px;
+    margin-top: 40px;
 `;
 
 /* [상단 프로필] */

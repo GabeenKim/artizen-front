@@ -16,7 +16,7 @@ function Ranker({ name, totalPrice, img }) {
               }}
             >
               <h2>{name}</h2>
-              <h3> 금액 {totalPrice}</h3>
+              <h3> 금액 {parseInt(totalPrice).toLocaleString()}원</h3>
             </div>
           </div>
         </div>

@@ -5,6 +5,8 @@ import MenuBar from "../../components/MenuBar";
 import AdminSiderbar from '../../components/admin/AdminSiderbar';
 import AdminCheckList from '../../components/admin/AdminCheckList';
 import AdminDivideList from '../../components/admin/AdminDivideList';
+import AdminHome from '../../components/admin/AdminHome';
+import { ContainerBody, LastOuterContainer } from "../../styles/BodyStyle";
 
 function AdminPage(){
     const [sidebar, setSidebar] = useState("/home");
@@ -15,19 +17,18 @@ function AdminPage(){
     }, [sidebar]);
 
     return (
-        <div style={{width:"100%"}}>
+        <LastOuterContainer>
+          
             <MenuBar/>
             <AdminSiderbar setSidebar={setSidebar}/>     
             {
                 sidebar == "/home" ?
-                <h2>home</h2> :
+                <AdminHome/> :
                 sidebar == "/project" ?
                 <AdminCheckList/> : <AdminDivideList/>
             }
-            <div style={{marginTop:"100px"}}>
-            </div>
-            <Footer/>
-        </div>
+            
+        </LastOuterContainer>
     )
 }
 

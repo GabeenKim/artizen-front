@@ -13,12 +13,12 @@ export default function CurrentContent({item}){
 
     const clickBtn = () => {
         let id = btnRef.current.id;
-        navigate(`/post/${id}`);
+        navigate(`/FundingContentDetail/${id}`);
     }
 
     return(
         <ContentBox id={item.contentId} ref={btnRef} onClick={clickBtn}>
-            <img src={TestImg}/>
+            <img src={item.image[0].imageUrl}/>
             <div style={{marginLeft:'10px'}}>
                 <div style={{display:'flex'}}>
                 <p style={{fontWeight:'bold'}}>{item.contentName}</p>
@@ -35,7 +35,13 @@ const ContentBox = styled.div`
     width: 100%;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     display: flex;
-    padding: 20px 0;
+    padding: 20px;
+
+    img{
+        width: 200px;
+        height: 150px;
+        object-fit: contain;
+    }
 `
 
 const Bedge = styled.div`

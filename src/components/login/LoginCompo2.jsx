@@ -6,36 +6,56 @@ import { useNavigate } from 'react-router-dom';
 const LoginCompo2 = () => {
   const [email, setEmail] = useState(""); // email 상태 변수 추가
   const [password, setPassword] = useState(""); 
-
+  const [modalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate(); 
 
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+      event.preventDefault();
 
-    try {
-      const response = await login(email, password);
-      localStorage.setItem('userId', response.data.userId);
-      localStorage.setItem('infoId',response.data.userInfo.infoId);
-      localStorage.setItem('name',response.data.userInfo.name);
-      const storedUserId = localStorage.getItem('userId');
-      
-      fetch(
-        `http://localhost:9999/account/showUser/${response.data.userInfo.infoId}`
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result.character);
-          if(result.character == null){
-            navigate('/investTest'); 
-          }else{
-            navigate('/intro'); 
+      {/* 로그인 */}
+      login({ email: email, password: password })
+      .then((res) => {
+          if (res.status !== 200){
+            setModalOpen(true);
           }
-        });
-    } catch (e) {
-      console.error(e); // handle error
-    }
+          else{
+            return res.json();
+          }
+      })
+      .then((res)=>{
+
+          if(res.writerId == null){
+            localStorage.setItem("userId", res.userId);
+          }else{
+            localStorage.setItem("writerId", res.writerId);
+          }
+          localStorage.setItem("infoId", res.userInfo.infoId);
+          localStorage.setItem("nickname", res.userInfo.nickname);
+          localStorage.setItem("name", res.userInfo.name);
+
+          if(localStorage.getItem('writerId')){
+            navigate('/intro'); 
+          }else{
+          fetch(
+            `http://localhost:9999/account/showUser/${localStorage.getItem('infoId')}`
+          )
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result.character);
+              if(result.character == null){
+                navigate('/investTest'); 
+              }else{
+                navigate('/intro'); 
+              }
+            });
+          }
+      })
+      .catch((e)=>{
+        console.log(e);
+      }); 
+
   };
 
   return ( 

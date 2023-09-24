@@ -11,7 +11,7 @@ function ComSupportPage(props) {
   const loadMoreItems = () => {
     if (!isListVisible) {
       // 리스트가 숨겨져 있는 경우만 데이터 로드
-      const endpoint = `http://localhost:9999/funding/showSupportRank`;
+      const endpoint = 'http://localhost:9999/funding/showSupportRank';
       fetch(endpoint)
         .then((response) => response.json())
         .then((response) => {
@@ -34,9 +34,9 @@ function ComSupportPage(props) {
         <h2>이달의 펀드왕</h2>
         <h1>TOP 3</h1>
       </div>
-      {/*카드형식 페이지*/}
+
       <RankUserListComponent />
-      {/*더보기란*/}
+
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <button onClick={loadMoreItems} id="moreBtn">
           See All

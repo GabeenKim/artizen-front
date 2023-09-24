@@ -11,7 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Swal from "sweetalert2";
-
+import { LastOuterContainer } from "../styles/BodyStyle";
 import Gift from "../image/gift.png";
 import QR from "../image/qr.png";
 import BigQr from "../image/big-qr.png";
@@ -37,6 +37,8 @@ function UserTicket() {
             let newArray = [...currentTickets];
             setTickets(newArray);
         });              
+
+        console.log(tickets);
     }, []);
     
     useEffect(() => {
@@ -71,7 +73,7 @@ function UserTicket() {
             cancelButtonText: 'NO',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    sendTicket(sendUserId, receiveId, ticketId);
+                    sendTicket({sendUserId, receiveId, ticketId});
                     setIsGiftModal(false);
                     setTickets(tickets.filter(ticket => ticket.TICKETID !== ticketId));
                     
@@ -92,9 +94,13 @@ function UserTicket() {
     }
 
     return (
-        <Box>
+            <Box>
             <div>
-                <Label>보유 티켓 목록</Label>
+                <Title>
+                    <h1> 티켓 목록
+                        <span>지인에게 티켓 보내보세요!</span>
+                    </h1>
+                </Title>
                 {tickets.length > 0 
                  ?tickets.map((ticket, index) => {
                     return (
@@ -184,9 +190,56 @@ function UserTicket() {
     )
 }
 
+const BaseHeading = styled.h1`
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-size: 25px;
+  color: #080808;
+  transition: all .4s ease;
+
+   span {
+    display: block;
+    font-size:.5em; 
+    line-height :1.3; 
+   }
+
+   em {
+     font-style:normal; 
+     font-weight :600; 
+   }
+`;
+
+const Title = styled(BaseHeading)`
+    text-transform: capitalize;
+
+    &::before {
+        position:absolute; 
+        left :0; 
+        bottom :0; 
+        width :60px; 
+        height :2px; 
+        content :"";
+        background-color:#c50000
+    }
+
+    & span {
+      font-size :15px ;  
+      font-weight :500 ;
+      text-transform :uppercase ;
+      letter-spacing :4px ;
+      line-height :3em ;
+      padding-left:.25em ;  
+      color :rgba(0,0,0,.4) ;  
+      padding-bottom :10px
+}
+`;
+
 const Box = styled.div`
     width: 50%;
-    margin-left: 630px;
+    margin-left: 560px;
 `;
 
 const Label = styled.div`

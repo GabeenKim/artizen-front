@@ -3,8 +3,8 @@ import '../../App.css';
 
 function RankUser({ id, name, totalPrice, img }) {
   return (
-    <div className="cardContainer">
-      <img style={{borderRadius : '100px'}} src={img} alt="movie" />
+    <div className="cardContainer" style={{height:'500px'}}>
+      <img src={img} alt="movie" />
       <div
         style={{
           display: 'flex',
@@ -23,7 +23,8 @@ function RankUser({ id, name, totalPrice, img }) {
       </div>
 
       <div id="card-content" style={{ lineHeight: '1.5' }}>
-        <h1> 금액 : {totalPrice}</h1>
+        <p>이번 달 {name}님의 펀딩 수익률</p>
+        <h1> 금액 : {parseInt(totalPrice).toLocaleString()} ₩</h1>
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import RegisterCompo from '../components/login/RegisterCompo';
+import RegisterCompo2 from '../components/login/RegisterCompo2';
 
-export default function Login(){
+export default function Register(){
     return (
     
         <div>
-            <RegisterCompo/>
+            <RegisterCompo2/>
         </div>
         
     )

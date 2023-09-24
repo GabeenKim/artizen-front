@@ -10,12 +10,15 @@ export default function Footer(){
     )
 }
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    // padding: 20px;
     background-color: #e0e7ff;
+    width: 100%;
+    bottom: 0px;
+    position: absolute;
 
     img{
         width:30px;

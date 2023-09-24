@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import MenuBar from '../components/MenuBar';
-import { ContainerBody } from '../styles/BodyStyle';
+import { ContainerBody, LastOuterContainer } from '../styles/BodyStyle';
 import { useNavigate } from 'react-router-dom';
 
 export default function Intro() {
@@ -19,7 +19,7 @@ export default function Intro() {
   };
 
   return (
-    <div>
+    <LastOuterContainer>
       <MenuBar />
       <ContainerBody>
         <ImgDiv>
@@ -154,7 +154,7 @@ export default function Intro() {
         </Div>
       </ContainerBody>
       <Footer />
-    </div>
+    </LastOuterContainer>
   );
 }
 

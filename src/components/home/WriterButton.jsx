@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import styled from "styled-components"
-import { writerContents, writerContentsFetch } from "../../api/writer";
+import { getWriterContents, getWriterContents2 } from "../../api/writer";
 
 export default function WriterButton({writer, index, setHoverBtn, setChecked, contents, setContents}){
     const [hoverOne, setHoverOne] = useState(false);
@@ -31,16 +31,40 @@ export default function WriterButton({writer, index, setHoverBtn, setChecked, co
         //     // }})
         // }
         // getWriterContents();
-        writerContentsFetch(writerId)
+        getWriterContents(writerId)
         .then((res)=>res.json())
         .then((res)=>{
             setContents((current) => {
                 let newContents = { ...current };
                 newContents[writerId] = res.slice(0, 5);
+                console.log(newContents)
+                // newContents.append({ funding: res.slice(0, 5) });
                 return newContents;
             });
         })
         .catch((e)=>console.log(e))
+
+        getWriterContents2(writerId)
+        .then((res)=>res.json())
+        .then((res)=>{
+            setContents((current) => {
+
+                let newContents = { ...current };
+                if(newContents[writerId]!==undefined){
+                    console.log(">> writerId: ", writerId)
+                    let newData = res.slice(0, 5);
+                    // console.log(typeof(newContents[writerId]));
+                    newContents[writerId] = [...newContents[writerId], ...newData];
+                    // newContents[writerId] = [...newData];
+                }
+                else{
+                    if(res.length !== 0)
+                        newContents[writerId] = res.slice(0, 5);
+                }
+                return newContents;
+            });
+        })
+        console.log(contents);
     }, []);
 
 
@@ -86,7 +110,7 @@ const Button = styled.button`
         `
         border: 2px solid transparent;
         background-image: linear-gradient(#fff, #fff), 
-        linear-gradient(to right, red 0%,  orange 100%);
+        linear-gradient(to right, rgba(238,174,202,1) 0%,  rgba(148,187,233,1) 100%);
         background-origin: border-box;
         background-clip: content-box, border-box;
         `

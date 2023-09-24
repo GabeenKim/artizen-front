@@ -10,6 +10,7 @@ import { getWriterContents, getWriterInfo, getWriterReivew } from "../api/writer
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import CurrentContent from "../components/writerComponents/CurrentContent";
 import PastContent from "../components/writerComponents/PastContent";
+import { LastOuterContainer } from "../styles/BodyStyle";
 
 export default function WriterPage(){
     const [writer, setWriter] = useState();
@@ -55,7 +56,7 @@ export default function WriterPage(){
     }, [])
 
     return(
-        <>
+        <LastOuterContainer>
         <MenuBar/>
         <ContainerBody>
             <Container>
@@ -125,7 +126,7 @@ export default function WriterPage(){
             </Container>
         </ContainerBody>
         <Footer/>
-        </>
+        </LastOuterContainer>
     )
 }
 
@@ -138,6 +139,7 @@ const Container = styled.div`
 
 const InnerContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
 `
 
 const RatingDiv = styled.div`
@@ -156,4 +158,5 @@ const ContainerBody = styled.div`
     padding-top: 150px;
     padding-left: 50px;
     padding-right: 50px;
+    padding-bottom: 100px;
 `

@@ -17,10 +17,13 @@ import TestOption from './components/testPages/TestOption';
 import TestResult from './components/testPages/TestResult';
 import FundingWritePage from './contentpage/FundingWritePage';
 import SupportWritePage from './contentpage/SupportWritePage';
-import MorePage from './contentpage/MorePage';
 import AdminPage from './pages/admin/AdminPage';
 import FundingContentDetail from './pages/FundingContentDetail';
 import WriterPage from './pages/WriterPage';
+import TestCompo from './pages/mypage/TestCompo';
+import FundingMorePage from './contentpage/FundingMorePage';
+import SupportMorePage from './contentpage/SupportMorePage';
+import SupportContentDetail from './pages/SupportContentDetail';
 
 const router = createBrowserRouter([
   {
@@ -76,10 +79,6 @@ const router = createBrowserRouter([
     element: <SupportWritePage />,
   },
   {
-    path: '/more',
-    element: <MorePage />,
-  },
-  {
     path: '/admin',
     element: <AdminPage/>,
   },
@@ -88,8 +87,20 @@ const router = createBrowserRouter([
     element: <FundingContentDetail/>
   },
   {
+    path: "/SupportContentDetail/:contentId",
+    element: <SupportContentDetail/>
+  },
+  {
     path: '/writer/:writerId',
     element: <WriterPage />,
+  },
+  {
+    path: '/fundingmore',
+    element: <FundingMorePage />,
+  },
+  {
+    path: '/supportmore',
+    element: <SupportMorePage />,
   },
 ]);
 

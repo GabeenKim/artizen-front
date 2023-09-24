@@ -48,7 +48,7 @@ function AdminDivideList() {
                 <hr/>
                 <div style={{display:"flex",  height:"100%"}}>
                     <div style={{width:"50%" }}>
-                        <h4>수익금 분배 대상 프로젝트</h4>
+                        <h4><b>수익금 분배 대상 프로젝트</b></h4>
                         {
                             oks.map((ok, index)=>{
                                 return (
@@ -80,7 +80,7 @@ function AdminDivideList() {
                     </div>
 
                     <div style={{width:"50%"}}>
-                        <h4>환불 대상 프로젝트</h4>
+                        <h4><b>환불 대상 프로젝트</b></h4>
                         {
                             fails.map((fail, index)=>{
                                 return (

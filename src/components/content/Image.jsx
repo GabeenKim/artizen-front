@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import elementalImage from '../../image/elemental.png';
 import elementalImage2 from '../../image/elemental2.png';
 import testImage from '../../image/test-img.jpg';
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia';
 // ... 다른 이미지들도 추가로 import ...
 
-function Image() {
-    const images = [elementalImage, elementalImage2, elementalImage]; // 이미지 배열
+function Image({ contentId }) {
+    const [data, setData] = useState(null);
+    const [images, setImages] = useState([]);
+    {/*const images = [elementalImage, elementalImage2, elementalImage]; // 이미지 배열 */}
     const [currentIndex, setCurrentIndex] = useState(0);
     const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
@@ -57,10 +59,32 @@ function Image() {
         });
     };
 
+
+    useEffect(() => {
+      fetch(`http://localhost:9999/poster/showFundingContentsDetail/${contentId}`)
+        .then(response => response.json())
+        .then(data => {
+          setData(data);
+          console.log(data.image);
+          if (data && data.image) {
+            setImages(data.image);
+            console.log(data.image);
+        }
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        
+        });
+    }, [contentId]);
+
+    
+    if (!data) return null;
+
+    
     return (
         <div style={containerStyle}>
             <LiaAngleLeftSolid onClick={handlePrev} style={{marginLeft:"50px",marginRight:"50px", cursor: 'pointer', fontSize: '2em', position: 'absolute', left: "-100px", top: '50%', transform: 'translateY(-50%)', zIndex: 1}} />
-            <img src={images[currentIndex]} alt="Description of Image" style={{...imageStyle, zIndex: 0}}/>
+            <img src={images[currentIndex].imageUrl} alt="Description of Image" style={{...imageStyle, zIndex: 0}}/>
             <LiaAngleRightSolid onClick={handleNext} style={{marginLeft:"20px", marginRight:"20px", cursor: 'pointer', fontSize: '2em', position: 'absolute', right: "-60px", top: '50%', transform: 'translateY(-50%)', zIndex: 1}} />
 
 

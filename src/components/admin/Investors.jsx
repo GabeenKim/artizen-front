@@ -11,100 +11,12 @@ import { Paper, ScopedCssBaseline } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getFundingUserByContentId } from "../../api/funding";
 
-const data = [
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    },
-    {
-        name: "김가빈",
-        nickname: "kblife1",
-        price: 10000,
-        earnings: 13000
-    }
-];
-
 export default function Investors(props){
     const [items, setItems] = useState([]);
 
     useEffect(()=>{
         getFundingUserByContentId(props.contentId, setItems);
-        
-        console.log(items);
+        console.log(props);
     }, [])
 
     return(
@@ -122,8 +34,8 @@ export default function Investors(props){
                         </Avatar>
                         </ListItemAvatar>
                         <InfoDiv>
-                        <ListItemText primary={`${item["userInfo"].name} | ${item["userInfo"].nickname}`}/>
-                        <p style={{color: "red", fontSize:"8px", margin:"0"}}>{`투자금 ${item.price}원`}{props.isSuccess&&` :: 예상수익금 0원`}</p>
+                        <ListItemText primary={`${item["userInfo"].name}`}/>
+                        {/* <p style={{color: "red", fontSize:"8px", margin:"0"}}>{`투자금 ${item.price}원`}{props.isSuccess &&` :: 예상수익금 0원`}</p>  */}
                         </InfoDiv>
                     </ListItem> 
                     ))

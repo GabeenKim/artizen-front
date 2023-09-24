@@ -5,7 +5,7 @@ function Support({ contentId }) {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-      fetch(`http://localhost:8080/contents/showFundingContentsDetail/${contentId}`)
+      fetch(`http://localhost:9999/poster/showFundingContentsDetail/${contentId}`)
         .then(response => response.json())
         .then(data => {
             console.log(data.writer);

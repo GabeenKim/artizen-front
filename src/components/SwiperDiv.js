@@ -22,7 +22,6 @@ export default function SwiperDiv({height, list, link}){
                 pagination={{
                 clickable: true,
                 }}
-                navigation={true}
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
@@ -50,9 +49,15 @@ const Banner = styled.div`
     justify-content: center;
     height: 
     ${({ height }) =>
-        600
+        height
     }px;
 `
 const Img = styled.img`
     objcet-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+
 `

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -13,9 +13,12 @@ import Swal from "sweetalert2";
 import CheckCard  from "./CheckCard";
 import { checkList } from '../../api/admin'
 import { ok, fail } from '../../api/admin'
+import { useNavigate } from "react-router-dom";
 
 function AdminCheckList() {
     const [checks,setChecks] = useState([]);
+    const navigate = useNavigate();
+    const btnRef = useRef();
 
     useEffect(() => {
         checkList(setChecks);
@@ -23,7 +26,7 @@ function AdminCheckList() {
 
 
     const handleGoDetail = () => {
-
+        navigate(`/SupportContentDetail/${btnRef.current.id}`)
     }
 
     const handleOk = (item) => {
@@ -92,7 +95,7 @@ function AdminCheckList() {
                                 <CheckCard item={check}/>
                                 
                                 <div style={{display:"flex", justifyContent:"flex-end", padding:"20px"}}>
-                                    <Button variant="contained" size="large" style={{marginRight:"25px"}} onClick={handleGoDetail}>
+                                    <Button id={check.contentId} ref={btnRef} variant="contained" size="large" style={{marginRight:"25px"}} onClick={handleGoDetail}>
                                         상세보기
                                     </Button>
                                     <Button variant="contained" color="success" size="large" style={{marginRight:"25px"}} 
@@ -117,6 +120,8 @@ const Box = styled.div`
     width: 100%;
     display: flex;
     justify-content : center;
+    padding-bottom: 100px;
+    margin-left: 30px;
 `;
 
 export default AdminCheckList;

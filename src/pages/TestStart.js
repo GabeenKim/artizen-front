@@ -2,20 +2,21 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import MenuBar from '../components/MenuBar';
 import styled from 'styled-components';
+import { LastOuterContainer } from "../styles/BodyStyle";
 
 function TestPage() {
   return (
-    <div>
+    <LastOuterContainer>
       <MenuBar />
       <div
         style={{
           position: 'relative',
 
-          width: '100%',
+          width: '90%',
           minWidth: '400px',
           maxWidth: '900px',
 
-          height: '120vh',
+          height: '115vh',
           margin: '0px auto',
           marginTop: '160px',
         }}
@@ -42,7 +43,7 @@ function TestPage() {
         </Link>
       </div>
       <Footer style={{ position: 'absolute', bottom: '0' }} />
-    </div>
+    </LastOuterContainer>
   );
 }
 
