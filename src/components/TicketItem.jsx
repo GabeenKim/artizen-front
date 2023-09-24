@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import TestImage from "../image/test-img.jpg";
 
 function TicketItem(props) {
     const { post, onClick } = props;
@@ -11,16 +10,23 @@ function TicketItem(props) {
     const startDay = start.getFullYear() + '.' + start.getMonth() + '.' + start.getDate();
     const endDay = end.getFullYear() + '.' + end.getMonth() + '.' + end.getDate();
 
+    useEffect(()=>{
+        console.log(props.IMAGE_URL);
+    },[])
+
+
     return (
         <Container>
             {/* 전시 정보 */}
-            <img src={TestImage} alt="포스터"/>
+            <div style={{display:'flex', alignItems:'center'}}>
+            <img src={post.IMAGE_URL} alt="포스터" style={{width: '100px', height:'100px', objectFit:'contain'}}/>
+            </div>
             <Wrapper onClick={onClick}>
                 <TitleText>
-                    <div>
-                        <h3> 작품명 : {post.CONTENTNAME}</h3>
-                        <h4> 전시 기간 : {startDay} ~ {endDay}</h4>
-                    </div>
+                    <DIV>
+                        <p className="title"> 작품명 : {post.CONTENTNAME}</p>
+                        <p className="time"> 전시 기간 : {startDay} ~ {endDay}</p>
+                    </DIV>
                 </TitleText>
             </Wrapper>
         </Container>
@@ -51,5 +57,15 @@ const TitleText = styled.div`
     font-weight: 500;
     
 `;
+
+const DIV = styled.div`
+    .title{
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .time{
+        font-size: 15px;
+    }
+`
 
 export default TicketItem;

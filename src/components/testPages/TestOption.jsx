@@ -4,6 +4,9 @@ import MenuBar from '../MenuBar';
 import styled from 'styled-components';
 import Questions from './question';
 import { createRef, useEffect, useState } from 'react';
+import { LastOuterContainer } from "../../styles/BodyStyle";
+import Money from '../../image/money.png';
+import User from "../../image/user.png";
 
 function TestOption() {
   const [loading, setLoading] = useState(false);
@@ -86,7 +89,7 @@ function TestOption() {
   }, [score, currentSlide]);
 
   return (
-    <>
+    <LastOuterContainer>
       <MenuBar />
       <section
         style={{
@@ -96,29 +99,38 @@ function TestOption() {
           flexDirection: 'column',
         }}
       >
+        
         {!loading && (
-          <>
+          <div>
             <div
               style={{
                 position: 'relative',
-                height: '900px',
-                width: '100%',
+                height: '850px',
+                width: '80%',
                 minWidth: '400px',
                 maxWidth: '900px',
                 margin: '0px auto',
                 marginTop: '160px',
+                marginBottom: '100px',
+                boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                padding:"60px",
               }}
             >
+              <div>
               <h1
                 style={{
                   textAlign: 'center',
                   color: '#94B1FB',
                   fontSize: '50px',
                   fontWeight: '700',
+                  padding:"10px",
+                  margin:"5px"
                 }}
               >
-                금융성향 테스트
+                <Image src={Money}/>금융성향 테스트 
               </h1>
+              </div>
+              
               <h3
                 style={{
                   textAlign: 'center',
@@ -174,12 +186,12 @@ function TestOption() {
                 </article>
               </div>
             </div>
-          </>
+          </div>
         )}
       </section>
 
       <Footer />
-    </>
+    </LastOuterContainer>
   );
 }
 
@@ -205,6 +217,10 @@ const TestText = styled.button`
     background-color: #94b1fb;
     font-weight: 600;
   }
+`;
+
+const Image = styled.img`
+  padding: 10px;
 `;
 
 export default TestOption;

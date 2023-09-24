@@ -11,7 +11,6 @@ function DivideCard(props) {
     useEffect(()=>{
         try{
             getWriterName(setName, props.item.writerId);
-            console.log(props);
         }catch(e){
             console.log(e);
         }

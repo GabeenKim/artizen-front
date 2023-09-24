@@ -55,11 +55,11 @@ function RecipeReviewCard(props) {
       <CardMedia
         component="img"
         height="194"
-        image="https://picsum.photos/600/400?grayscale"
+        image="https://spring-s3-artizen.s3.ap-northeast-2.amazonaws.com/956e71c2-7867-42f1-b5f1-2d98c25766d9.jpg"
         alt="Paella dish"
       />
       <CardContent>
-        <Typography>♥ {props.likes}</Typography>
+        <Typography>♥ 350 </Typography>
         <Typography
           variant="body2"
           color="text.secondary"

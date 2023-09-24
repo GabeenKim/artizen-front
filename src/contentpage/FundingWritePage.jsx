@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useRef, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CategoryFilter from "./CategoryFilter";
@@ -12,17 +12,17 @@ import Uploader from "./Uploader";
 import axios from 'axios';
 import Button from '@mui/joy/Button';
 
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import MenuBar from '../../src/components/MenuBar'; 
-import Footer from '../../src/components/Footer';
+import MenuBar from '../components/MenuBar'; 
+import Footer from '../components/Footer';
 import { ContainerBody } from "../styles/BodyStyle";
-import Alert from '@mui/material/Alert';
+import { addFundingContents } from "../api/tmp";
+import { LastOuterContainer } from "../styles/BodyStyle";
 
 
 const Wrapper = styled.div`
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
     width: 100%;
-    max-width: 720px;
+    max-width: 850px;
 
     & > * {
         :not(:last-child) {
@@ -65,9 +65,8 @@ const CalendarRow = styled.div`
 `;
 
 
-
 const TextIn = styled.textarea`
-    width: calc(100% - 32px);
+    width: calc(100% - 16px);
     ${(props)=>
         props.height &&
         `
@@ -84,54 +83,96 @@ const select = styled.select`
     width: 110px;
 `;
 
-const SelectBox = () => {
-	return (
-        <div>
-            <span>티켓 수량 : </span>
-		<select style={{ width: '200px', height: '30px' }}>
-			<option key="1" value="1">
-				1매
-			</option>
-			<option key="2" value="2">2매</option>
-			<option key="3" value="2">3매</option>
-		</select>
-        </div>
-	);
-};
-
 const LeftSide = styled.div`
     flex: 1;
-    margin-right: 16px;
+    margin-right: 100px;
+
 `;
 
 const RightSide = styled.div`
     flex: 2;
 `;
 
-function PostWritePage(props) {
+function PostWritePage({props}) {
     const navigate = useNavigate();
-
+    const [contentId, setContentId] = useState("");
     const [category, setCategory] = useState("show");
     const [contentName, setContentName] = useState("");
-    const [target, setTarget] = useState("");
-    const [startDay, setStartDay] = useState("");
-    const [endDay, setEndDay] = useState("");
-    const [dateRange, setDateRange] = useState([dayjs('2023-09-12'), dayjs('2023-09-21')]);
-    const [writerId, setWriterId] = useState(2);
     const [contentDetail, setContentDetail] = useState("");
-   // const [transaction, setTransaction] = useState("");
+    const [target, setTarget] = useState("");
+    const [dateRange, setDateRange] = useState([dayjs('2023-09-12'), dayjs('2023-09-21')]);
+    const [startDay, setStartDay] = useState("2023-10-10");
+    const [endDay, setEndDay] = useState("2023-10-11");
+    const [writerId, setWriterId] = useState(2);
+    const [imageUrl, setImageUrl] = useState("");
     const [productionCost, setProductionCost] = useState("");
     const [purpose, setPurpose] = useState("");
-    const [minInvest, setminInvest] = useState("");
+    const [minInvest, setMinInvest] = useState("");
+    const [criterion, setCriterion] = useState("");
+    const [giftList, setGiftList] = useState("");
+    const [ticketCnt, setTicketCnt] = useState("");
     let [isInputClicked, setIsInputClicked] = useState(false);
     //const {height, value, onChange} = props;
     
-
+    
     const [dialogOpen, setDialogOpen] = useState(false);
     
     const [openConfirm, setOpenConfirm] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
+    const [imageData, setImageData] = useState(null);
+    
+    //선물리스트 추가
+    const onChangeCriterion = (e) => { 
+        setCriterion(e.target.value);
+    };
+    
+    const onChangeGiftList = (e) => { 
+    setGiftList(e.target.value);
+    };
 
+    const onChangeTicketCnt = (e) => { 
+        setTicketCnt(e.target.value);
+        };
+    const SelectBox = () => {
+    return (
+        <div>
+        <span> 수량 : </span>
+        <select style={{ width: '60px', height: '30px', margin : '10px'}}
+            onChange={onChangeTicketCnt}
+            value={ticketCnt}>
+            <option key="0" value="0"> 0</option>
+            <option key="1" value="1"> 1매</option>
+            <option key="2" value="2">2매</option>
+            <option key="3" value="3">3매</option>
+        </select>
+        </div>
+    );
+    };
+
+    //선물리스트 후 초기화 
+    const inputRef = useRef(null);
+    const onClickAddButton = () => { 
+        const newGift = { 
+            criterion: criterion,
+            giftList: giftList,
+            ticketCnt : ticketCnt 
+        };
+        
+        setGifts([...gifts, newGift]);
+        
+        // 상태 초기화 및 포커스 설정.
+        setCriterion('');
+        setGiftList('');
+        setTicketCnt(''); 
+        
+        inputRef.current.focus(); 
+    };
+
+    const deleteButton =(index) => {
+        setGifts(gifts.filter((gift) => gift !== gifts[index]))
+    }  
+
+    const [gifts, setGifts] = useState([]);  
 
     const handleClickOpen = () => {
         setOpenConfirm(true);
@@ -146,6 +187,10 @@ function PostWritePage(props) {
         navigate("/");
       };
 
+    const handleImageUpload = (data) => {
+        setImageData(data);
+     
+    }  
     useEffect(() => {
         
         const sessionToken = localStorage.getItem('sessionToken');
@@ -158,65 +203,68 @@ function PostWritePage(props) {
         dayjs('2023-09-12'),
         dayjs('2023-09-21'),
       ]);
-    
-      //db연결
+
       const handleSubmit = async (event) => {
         event.preventDefault();
-
+        console.log("너뭐야")
         try {
-
             console.log('데이터가 성공적으로 추가되었습니다.');
             setDialogOpen(true);
-
+    
             const startDate = dateRange[0];
             const endDate = dateRange[1];
-    
-            const response = await axios.post('http://10.10.221.40:9999/poster/addFundingContents', {
+            
+            addFundingContents({
                 contentName:contentName,
                 target:target,
                 category:category,
                 startDay: startDate.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),  // ISO 8601 형식으로 변환
                 endDay: endDate.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),  // ISO 8601 형식으로 변환
-                writerId:2,
-                fundingContents: { 
+                writerId: localStorage.getItem("writerId"),
+                fundingContents : { 
+                    contentId : contentId,
                     detail: contentDetail, 
                     productionCost:productionCost, 
                     purpose:purpose, 
                     minInvest:minInvest,
-                    contentId : 1
-                },
-                gift: [
+        
+                        }, 
+                gift:[
                     {
-                        criterion: 5000,
-                        giftList: "햄토리 랜덤박스",
-                        ticketCnt: 1
+                        criterion:criterion,
+                        giftList:"햄토리 랜덤박스",
+                        ticketCnt :ticketCnt
                     }
-                ]
-        });
-
-            console.log(response.data); // 성공적으로 추가된 데이터 확인
-
-            // 성공적으로 데이터가 추가되었을 때의 처리
-            console.log('데이터가 성공적으로 추가되었습니다.');
-            navigate("/"); 
+                  ], 
+                imageUrl:imageData.url
+            }).then((res)=>{
+                console.log(res.status)
+                return res.json()
+            }).then((res)=>{
+                console.log(res)
+                console.log('데이터가 성공적으로 추가되었습니다.');
+                navigate("/"); 
+            }).catch((e)=>console.log(e))
         } catch (error) {
             console.error('오류 발생:', error);
         }
     };
-
        
     return (
-       <>
-       <ContainerBody>
-       <MenuBar/>       
+        
+        <LastOuterContainer>
+        <MenuBar/>
+        <ContainerBody>
         <Wrapper>
-         <form onSubmit={handleSubmit}>
             <Container style={{ display: 'flex' }}>
-                <LeftSide>
-                <Uploader >
-                <input type="file" accept="image/*" />
+            <LeftSide>
+                <Uploader onUpload={handleImageUpload}>
+                {/* <input type="file" accept="image/*" /> */}
+                < input type="file" />
                 </Uploader>
-                </LeftSide>
+            </LeftSide>
+            
+            <form onSubmit={handleSubmit}>
                 <RightSide>
                 <CategoryFilter
                 categories={categories}
@@ -243,7 +291,6 @@ function PostWritePage(props) {
                     }}
                     placeholder={isInputClicked === true ? "" : "제목을 입력해주세요."}
                 />
-                
                 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                  <DemoContainer components={['DateRangePicker', 'DateRangePicker']}>
@@ -285,10 +332,62 @@ function PostWritePage(props) {
                     }}
                     placeholder={isInputClicked === true ? "" : "목표하는 후원금을 입력해주세요."}
                 />
-
-                <SelectBox></SelectBox>
-             
+               
+               
+               <div  style={{ display: 'flex', alignItems: 'center' }} > 
+                <TextIn
+                    height={5}
+                    style={{ width: '60px' }}
+                    value={criterion}
+                    ref={inputRef}
+                    onChange={onChangeCriterion}
+                    onFocus={() => {
+                        setIsInputClicked(true);
+                    }}
+                    onBlur={() => {
+                        setIsInputClicked(false);
+                    }}
+                    placeholder={isInputClicked === true ? "" : "금액 기준"}
+                    
+                />
                  <TextIn
+                    height={5}
+                    style={{ width: '60px' }}
+                    value={giftList}
+                    ref={inputRef}
+                    onChange={onChangeGiftList}
+                    onFocus={() => {
+                        setIsInputClicked(true);
+                    }}
+                    onBlur={() => {
+                        setIsInputClicked(false);
+                    }}
+                    placeholder={isInputClicked === true ? "" : "선물내용"}
+                    
+                /> <SelectBox onChange={onChangeTicketCnt} ref={inputRef} value={ticketCnt}> </SelectBox>
+                <button  type="submit" onClick={onClickAddButton} > 선물 리스트 추가 </button>
+                </div>
+                <div>
+                    {gifts.map((gift, index) => (
+                        <div key={index}
+                            id={index}
+                            style={{
+                            border: '1px solid #ccc',
+                            borderRadius: '10px',
+                            padding: '20px',
+                            margin: '10px',
+                            boxShadow: '2px 2px 8px rgba(0, 0, 0, .1)'
+                            }}>
+                        <p>금액 기준: {gift.criterion} 원, 
+                        선물 내용: {gift.giftList} ,
+                        티켓 수량: {gift.ticketCnt} 개 </p>   
+                        <button onClick={() => deleteButton(index)} > 삭제 </button>
+                        </div>
+                    ))}
+                </div>
+             
+              
+                 {/* <TextIn
                 height={20}
                 value={writerId}
                 onChange={(event) => {
@@ -301,22 +400,8 @@ function PostWritePage(props) {
                     setIsInputClicked(false);
                 }}
                 placeholder={isInputClicked === true ? "" : "작가아이디."}
-                 />
-                 {/* <TextIn
-                height={20}
-                value={transaction}
-                onChange={(event) => {
-                    setTransaction(event.target.value);
-                }}
-                onFocus={() => {
-                    setIsInputClicked(true);
-                }}
-                onBlur={() => {
-                    setIsInputClicked(false);
-                }}
-                placeholder={isInputClicked === true ? "" : "객단가 ... 순수익.."}
                  /> */}
-                 <TextIn
+                <TextIn
                 height={20}
                 value={productionCost}
                 onChange={(event) => {
@@ -334,7 +419,7 @@ function PostWritePage(props) {
                 height={20}
                 value={minInvest}
                 onChange={(event) => {
-                    setminInvest(event.target.value);
+                    setMinInvest(event.target.value);
                 }}
                 onFocus={() => {
                     setIsInputClicked(true);
@@ -345,8 +430,7 @@ function PostWritePage(props) {
                 placeholder={isInputClicked === true ? "" : "최소투자금액을 설정해주세요"}
                  />
                
-               
-                    <Button variant="outlined" onClick={handleClickOpen}>
+               <Button variant="outlined" onClick={handleClickOpen}>
                         등록하기
                     </Button>
                     <Dialog
@@ -370,43 +454,44 @@ function PostWritePage(props) {
                             event.preventDefault();
 
                             // handleSubmit 함수 호출
-                            await handleSubmit(event);
+                           await handleSubmit(event);
+                          
                             setOpenConfirm(false);
                             setOpenSuccess(true);
-                           
+                        
                         }} type="submit" autoFocus>
                           동의합니다. </Button>
                         </DialogActions>
                     </Dialog>
                     <Dialog
-                    open={openSuccess}
-                    onClose={handleCloseSuccess}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                    >
-                    <DialogTitle id="alert-dialog-title">
-                    {"게시글 등록 요청이 성공되었습니다"}
-                    </DialogTitle>
+                        open={openSuccess}
+                        onClose={handleCloseSuccess}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                        >
+                        <DialogTitle id="alert-dialog-title">
+                        {"게시글 등록 요청이 성공되었습니다"}
+                        </DialogTitle>
 
-                    <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        관리자 승인 후 게시물이 등록됩니다.
-                    </DialogContentText>
-                    </DialogContent>
+                        <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            관리자 승인 후 게시물이 등록됩니다.
+                        </DialogContentText>
+                        </DialogContent>
 
-                    {/* "확인하였습니다." 버튼 클릭 시 메인 페이지로 이동 */}
-                    <DialogActions>
-                        <Button onClick={handleCloseSuccess}>확인하였습니다.</Button>
-                    </DialogActions>
-                </Dialog> 
+                        {/* "확인하였습니다." 버튼 클릭 시 메인 페이지로 이동 */}
+                        <DialogActions>
+                            <Button onClick={handleCloseSuccess}>확인하였습니다.</Button>
+                        </DialogActions>
+                    </Dialog> 
                 </RightSide>
-            </Container>
             </form>
-    
+            </Container>
+           
         </Wrapper>
         </ContainerBody>
         <Footer/>
-        </>
+        </LastOuterContainer>
     );
 
 }

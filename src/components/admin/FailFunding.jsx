@@ -5,31 +5,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import Viewers from "./Viewers";
 
-export default function FailFunding({data2}){
-
-
-    const data = {
-        contentId : 1,
-        contentSum : 4500000,
-        target : 5000000,
-        category : "영화",
-        contentName : "메가로돈2",
-        name: "김한민",
-        datail : "지구 역사상 가장 거대한 최상위 포식자 ‘메가로돈’과 목숨 건…",
-        startPeriod : "2023.09.05",
-        endPeriod : "2023.10.05",
-        likes : 33,
-        writerId : 1234,
-        transaction: 4500,
-        productionCost: 100000000,
-        purpose: "영화 홍보비 조달",
-        minInvest: 50000,
-        average: 844236,
-        return: 300000,
-        period: 30,
-        returnRate:10
-    }
-
+export default function FailFunding(props){
     const pData = [2400, 1398, -9800, 3908, 4800, -3800, 4300];
 
     const xLabels = [
@@ -42,45 +18,54 @@ export default function FailFunding({data2}){
     'Page G',
     ];
 
+    const [startDay, setStartDay] = useState();
+    const [endDay, setEndDay] = useState();
+    const [diffDay, setDiffDay] = useState();
 
-    // useEffect(()=>{
-    //     console.log(process.env.REACT_APP_KOFIC_KEY)
-    //     async function getMovie(){
-    //         const res = await searchMovie();
-    //         console.log(res);
-    //     }
-    //     getMovie();
-    // }, [])
+    useEffect(()=>{
+    
+        setStartDay(''.concat(new Date(props.item.startDay).getFullYear(), "-" , new Date(props.item.startDay).getMonth(), "-", new Date(props.item.startDay).getDay()));
+        setEndDay(''.concat(new Date(props.item.endDay).getFullYear(), "-" , new Date(props.item.endDay).getMonth(), "-", new Date(props.item.endDay).getDay()));
+        
+        const t1 = new Date(startDay);
+        const t2 = new Date(endDay);
+        const today = new Date();
+
+        let diff = Math.abs(today.getTime() - t1.getTime());
+        diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        setDiffDay(diff);
+    }, [])
     return(
         <Container>
+
             <div style={{display:"flex"}}>
-                <h2>{data.contentName}</h2>
-                <Chip label={data.category} color="primary" variant="outlined" />
+                <h2><b>{props.item.contentName}</b></h2>
+                <Chip label={props.item.category} color="primary" variant="outlined" />
             </div>
-            <p style={{margin:"0"}}>{data.name}</p>
+            <p style={{margin:"0"}}>{props.item.name}</p>
 
 
-            <InnerContainer>
-            <div>
-            <h2>투자 개요</h2>
-            <Table>
-                <tr><td>투자금 조달 목적</td><td>{data.purpose}</td></tr>
-                <tr><td>최소 투자 금액</td><td>{data.minInvest}</td></tr>
-                <tr style={{color:"red"}}><td>모집 기간</td><td>{data.startPeriod} ~ {data.endPeriod}</td></tr>
-            </Table>
+            <InnerContainer style={{padding:"10px"}}>
+            <div style={{padding:"10px"}}>
+                <h2><b>투자 개요</b></h2>
+                <Table>
+                    <tr><td>투자금 조달 목적</td><td style={{textAlign:"right"}}>{props.item.fundingContents.purpose}</td></tr>
+                    <tr><td>최소 투자 금액</td><td style={{textAlign:"right"}}>{parseInt(props.item.fundingContents.minInvest).toLocaleString()}원</td></tr>
+                    <tr style={{color:"red"}}><td style={{textAlign:"left"}}><b>모집 기간</b></td><td>{startDay} ~ {endDay}</td></tr>
+                </Table>
             </div>
-            <div>
-            <h2>투자 구조</h2>
+            <div style={{padding:"10px"}}>
+            <h2><b>투자 구조</b></h2>
             <table>
-                <tr><td>총 예산 규모</td><td>{data.productionCost}원</td></tr>
-                <tr><td>객단가</td><td>{data.transaction}원</td></tr>
-                <tr><td>추정 손익분기점</td><td>{Math.ceil(data.productionCost/data.transaction)}명</td></tr>
+                <tr><td>총 예산 규모</td><td style={{textAlign:"right"}}>{parseInt(props.item.fundingContents.productionCost).toLocaleString()}원</td></tr>
+                <tr><td>객단가</td><td style={{textAlign:"right"}}>{parseInt(props.item.fundingContents.transaction).toLocaleString()}원</td></tr>
+                <tr><td>추정 손익분기점</td><td style={{textAlign:"right"}}>{Math.ceil(props.item.fundingContents.productionCost/props.item.fundingContents.transaction)}명</td></tr>
             </table>
             </div>
             </InnerContainer>
 
             <Viewers isSuccess={false}
-                fail={{target:20000000, sum:9000000}}
+                fail={{target:props.item.target, sum:props.item.contentSum}}
             />
 
             <div style={{marginTop:"50px", display:"flex", flexDirection:"column", alignItems:"center", fontWeight:"bold", width:"80%"}}>

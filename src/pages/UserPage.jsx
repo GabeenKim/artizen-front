@@ -13,6 +13,7 @@ function UserPage({sidebar}) {
 
 const Box = styled.div`
   margin: auto;
+  width: 100%;
 `
 
 export default UserPage;

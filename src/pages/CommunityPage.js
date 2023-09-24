@@ -3,13 +3,14 @@ import { SectionsContainer, Section } from 'react-fullpage';
 import '../App.css';
 import ComTitlePage from './ComTitlePage';
 import ComFundingPage from './ComFundingPage';
+import ComFundingPage2 from './ComFundingPage2';
 import ComSupportPage from './ComSupportPage';
 import MenuBar from '../components/MenuBar';
 import Footer from '../components/Footer';
 
 function CommunityPage(props) {
   let options = {
-    anchors: ['title', 'ranking1', 'ranking2'],
+    anchors: ['title', 'ranking1', 'ranking2', 'ranking3'],
     navigation: true,
     scrollBar: false,
     delay: 700,
@@ -25,7 +26,12 @@ function CommunityPage(props) {
       <Section id="section2">
         <ComFundingPage />
       </Section>
+
       <Section id="section3">
+        <ComFundingPage2 />
+      </Section>
+
+      <Section id="section4">
         <ComSupportPage />
         <Footer />
       </Section>

@@ -53,12 +53,12 @@ export default function MenuBar() {
           <img style={{ width: '300px' }} src="/img/title.png" />
         </Link>
         <Link to={'/intro'}>
-          <MenuTitle>소개</MenuTitle>
+          <MenuTitle><b>소개</b></MenuTitle>
         </Link>
 
         <MenuBtnContainer>
           <MenuTitle onClick={fundingHandler} ref={fundingRef}>
-            펀딩
+            <b>펀딩</b>
           </MenuTitle>
           <Menu isDropped={fundingIsOpen}>
             <Ul>
@@ -83,11 +83,11 @@ export default function MenuBar() {
         </MenuBtnContainer>
 
         <Link to={'/mypage'}>
-          <MenuTitle>마이페이지</MenuTitle>
+          <MenuTitle><b>마이페이지</b></MenuTitle>
         </Link>
 
         <Link to={'/community'}>
-          <MenuTitle>커뮤니티</MenuTitle>
+          <MenuTitle><b>커뮤니티</b></MenuTitle>
         </Link>
 
         <MenuTitle onClick={clickSearch}>

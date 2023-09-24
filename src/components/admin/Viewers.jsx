@@ -8,7 +8,7 @@ export default function Viewers({isSuccess, success, fail}){
                 isSuccess ?
                 <><span>{success.countString}</span><span>수익률 약 {success.earning}%</span></>
                 :
-                <><span style={{color:"red"}}>모집 금액 | {fail.sum}</span><span style={{color:"red"}}>목표 {fail.target}</span></>
+                <><span style={{color:"red"}}><b>모집 금액 | {parseInt(fail.sum).toLocaleString()} 원</b></span><span style={{color:"red"}}> <b>목표{parseInt(fail.target).toLocaleString()} 원</b></span></>
             }
         </div>
         <GraphBody>

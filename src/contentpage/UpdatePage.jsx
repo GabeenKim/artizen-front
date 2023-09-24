@@ -135,8 +135,6 @@ function UpdatePage(props) {
     //     setPost(resp.data);
     //     };
     
-
-
     useEffect(() => {
         const fetchContent = async () => {
         const resp = await axios.get(`http://10.10.221.40:9999/poster/showFundingContentsDetail/${contentId}`);

@@ -12,7 +12,7 @@ function ComFundingPage() {
     console.log(isListVisible);
     if (!isListVisible) {
       // 리스트가 숨겨져 있는 경우만 데이터 로드
-      const endpoint = `http://localhost:9999/community/showContentsRank`;
+      const endpoint = `http://localhost:9999/community/showContentsRank1`;
       fetch(endpoint)
         .then((response) => response.json())
         .then((response) => {
@@ -41,7 +41,7 @@ function ComFundingPage() {
         </button>
       </div>
       {/* isListVisible 상태에 따라 조건부 렌더링 */}
-      {isListVisible && <RankingList rankings={rankings} />}
+      {isListVisible && <RankingList rankings={rankings} isFunding={true}/>}
     </div>
   );
 }

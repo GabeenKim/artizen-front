@@ -73,7 +73,7 @@ export default function WriterDiv(){
                         {...(checked ? { timeout: 1000*index } : {})}
                         >
                         <ContentDiv>
-                            <img src={item.image}/>
+                            <img src={item.image[0].imageUrl}/>
                             <div>#{item.contentName}</div>
                         </ContentDiv>
                         </Grow>

@@ -15,24 +15,27 @@ function AdminHome() {
                 </div>
             <hr/>
                 <Title>
-                    <h1>등록된 프로젝트  <b style={{color:"#ff1744"}}>100개</b></h1>
+                    <h3>등록된 프로젝트  <b style={{color:"#ff1744"}}>34개(↑5개)</b></h3>
                 </Title>
 
                 <Title>
-                    <h1>총 후원 금액  <b style={{color:"#ff1744"}}>100,000,000원</b></h1>
+                    <h3>총 후원 금액  <b style={{color:"#ff1744"}}>5,430,000원(↑1,250,000원)</b></h3>
                 </Title>
 
                 <Title>
-                    <h1>총 펀딩 금액  <b style={{color:"#ff1744"}}>100,000,000원</b></h1>
+                    <h3>총 펀딩 금액  <b style={{color:"#ff1744"}}>6,603,000원(↑1,040,000원)</b></h3>
                 </Title>
 
                 <Title>
-                    <h1>등록된 사용자  <b style={{color:"#ff1744"}}>100명</b></h1>
+                    <h3>등록된 사용자  <b style={{color:"#ff1744"}}>13명(↑4명)</b></h3>
                 </Title>
 
                 <Title>
-                    <h1>등록된 작가  <b style={{color:"#ff1744"}}>100명</b></h1>
+                    <h3>등록된 작가  <b style={{color:"#ff1744"}}>10명(↑3명)</b></h3>
                 </Title>
+                <div style={{height:"100px"}}>
+                    
+                </div>
             </div>
         </Box>
     )
@@ -41,8 +44,9 @@ function AdminHome() {
 const Box = styled.div`
     width: 38%;
     display: flex;
-    justify-content: column;
-    margin-left: 550px;
+    justify-direction: column;
+    justify-content: center;
+    margin-left: 700px;
     margin-top: 50px;
     padding: 15px;
 `;

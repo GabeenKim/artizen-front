@@ -10,13 +10,13 @@ export default function PastContent({item}){
 
     const clickBtn = () => {
         let id = btnRef.current.id;
-        navigate(`/post/${id}`);
+        navigate(`/FundingContentDetail/${id}`);
     }
 
     return(
         <ContentDiv id={item.contentId} ref={btnRef} hover={hover} onClick={clickBtn} onMouseOver={()=>{setHover(true)}} onMouseOut={()=>{setHover(false)}}>
             <Bedge bg={'#075985'}>{item.category}</Bedge>
-            <img src={TestImg}/>
+            <div><img src={item.image[0].imageUrl}/></div>
             <div className='text'>#{item.contentName}</div>
         </ContentDiv>
     )

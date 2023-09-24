@@ -13,7 +13,7 @@ import {
 } from "react-share";
 
 export default function Share(props) {
-  const currentUrl = "http://localhost:9999";
+  const currentUrl = "www.artizen.com";
   const hashtags = ["artizen", "아티즌", props.ticket.CONTENTNAME];
 
   return (

@@ -13,7 +13,7 @@ import { FreeMode, Pagination, Navigation } from 'swiper/modules';
 import GalleryFicture from './GalleryFicture';
 import styled from 'styled-components';
 
-export default function SwiperMultipleDiv({data}){
+export default function SwiperMultipleDiv({data, type}){
     return (
         <SwiperContainer>
             <Swiper
@@ -29,7 +29,7 @@ export default function SwiperMultipleDiv({data}){
                 {
                     data && data.map((item, index) => (
                         <SwiperSlide id={index}>
-                            <GalleryFicture width={"100%"} data={item}></GalleryFicture>
+                            <GalleryFicture key={item.contentId} width={"100%"} data={item} isFunding={type==='funding'?true:false}></GalleryFicture>
                         </SwiperSlide>
                     ))
                 }

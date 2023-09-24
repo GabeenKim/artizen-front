@@ -4,7 +4,7 @@ function Title({ contentId }) {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-      fetch(`http://localhost:8080/contents/showFundingContentsDetail/${contentId}`)
+      fetch(`http://localhost:9999/poster/showFundingContentsDetail/${contentId}`)
         .then(response => response.json())
         .then(data => {
           setData(data);
@@ -12,7 +12,11 @@ function Title({ contentId }) {
         .catch(error => {
           console.error("Error fetching data:", error);
         });
+
+
     }, [contentId]);
+
+    
 
     if (!data) return null;
 
@@ -27,7 +31,9 @@ function Title({ contentId }) {
                     height: "35px",
                     fontSize:"16px",
                 }}>
-                    {data.category}
+                    { data.category == "movie" ? "영화" : 
+                      data.category == "exhibition" ? "전시" :
+                      data.category == "show" ? "공연" : null}
                 </button>  
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>     
                 <h1 style={{ marginTop:"15px", fontSize:"40px", }}>{data.contentName}</h1>  

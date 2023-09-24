@@ -57,7 +57,8 @@ export default function DivideCompo(props){
     };
 
     {/* 수익 분배 */}
-    const clickAgree = (contentId) => {
+    const clickAgree = async (contentId) => {
+       
         Swal.fire({
             title: '[재확인] 수익 분배 하시겠습니까?',
             text: "다시 되돌릴 수 없습니다. 신중하세요.",
@@ -84,8 +85,6 @@ export default function DivideCompo(props){
     return(
         <OuterContainer>
         <Container>
-            {/* <Investors isSuccess={isSuccess} contentId={contentId}/> */}
-            {/* <SuccessFunding/> */}
             <Investors isSuccess={isSuccess} contentId={props.contentId} />
             <>
                 {
@@ -126,7 +125,7 @@ export default function DivideCompo(props){
             : 
              <>
                 
-                    <Button variant="contained" color="error" sx={{width: "30%", padding: "10px"}} onClick={handleClickFailOpen}>환불</Button>
+                <Button variant="contained" color="error" sx={{width: "30%", padding: "10px"}} onClick={handleClickFailOpen}>환불</Button>
                 
                 <Dialog
                     open={openFail}

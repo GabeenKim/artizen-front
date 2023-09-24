@@ -3,46 +3,61 @@ import { useNavigate, useParams } from "react-router-dom";
 import { dummyData } from "../assets/dummyData";
 import SwiperMultipleDiv from "../components/SwiperMultipleDiv";
 import MenuBar from "../components/MenuBar";
-import { ContainerBody } from "../styles/BodyStyle";
+import { ContainerBody, LastOuterContainer } from "../styles/BodyStyle";
 import Footer from "../components/Footer";
 import styled from "styled-components";
 import Button from '@mui/material/Button';
 
 export default function Contents(){
     const [data, setData] = useState([]);
+
+    const [movieData , setMovieData ] = useState([]);
+    const [showData , setShowData ] = useState([]);
+    const [exhibitionData , setExhibitionData ] = useState([]);
+
     const {type} = useParams();
     const navigate = useNavigate();
     console.log(type);
     var api = "";
+    var link = ""
     if(type === 'funding'){
-        api = "http://localhost:9999/showAllFunding"
+        api = "http://localhost:9999/poster/showAllFundingContents"
+        link = "/fundingmore";
     }else if(type === 'support'){ 
-        api = "http://localhost:9999/showAllSupport"
+        api = "http://localhost:9999/poster/showAllSupportContents"
+        link = "/supportmore";
     }
 
-    async function getData(url="", data={}){
+    async function getData(url){
+        console.log(url)
         const response = await fetch(url, {
             method: "GET",   
         })
         return response.json();
     }
-
+    
     const clickMore = (e) => {
         navigate(`/contents/${type}/${e.target.id}`);
        
     }
 
     useEffect(()=>{
-        // getData(api).then((data) => {
-        //     console.log(data);
-        // });
+        getData(api).then((data) => {
+            console.log(data);
+            // setData(data)
+            setMovieData(data.filter(content => content.category === 'movie'))
+            setShowData(data.filter(content => content.category === 'show'))
+            setExhibitionData(data.filter(content => content.category === 'exhibition'))
 
-        setData(dummyData);
+            console.log(movieData, showData, exhibitionData)
+        });
+
+        // setData(dummyData);
         // console.log(data);
     }, []);
-    
+
     return (
-        <div>
+        <LastOuterContainer>
             <MenuBar/>
             <ContainerBody>
                 <Title>
@@ -65,16 +80,17 @@ export default function Contents(){
                     </Button>
                 )}
                 </ButtonContainer>
+               
+                <Title><h2>영화</h2><p onClick={() => navigate(link,  { state: { category: 'movie' } })}  id="movie">더보기&gt;</p></Title>
+                <SwiperMultipleDiv data={movieData} type={type}></SwiperMultipleDiv>
+                <Title><h2>공연</h2><p onClick={() => navigate(link,  { state: { category: 'show' } })}  id="show">더보기&gt;</p></Title>
+                <SwiperMultipleDiv data={showData} type={type}></SwiperMultipleDiv>
+                <Title><h2>전시</h2><p onClick={() => navigate(link,  { state: { category: 'exhibition' } })}   id="exhibition">더보기&gt;</p></Title>
+                <SwiperMultipleDiv data={exhibitionData} type={type}></SwiperMultipleDiv>
 
-                <Title><h2>영화</h2><p onClick={() => navigate("/more",  { state: { category: 'movie' } })}  id="movie">더보기&gt;</p></Title>
-                <SwiperMultipleDiv data={data}></SwiperMultipleDiv>
-                <Title><h2>공연</h2><p onClick={() => navigate("/more",  { state: { category: 'show' } })}  id="show">더보기&gt;</p></Title>
-                <SwiperMultipleDiv data={data}></SwiperMultipleDiv>
-                <Title><h2>전시</h2><p onClick={() => navigate("/more",  { state: { category: 'exhibition' } })}   id="exhibition">더보기&gt;</p></Title>
-                <SwiperMultipleDiv data={data}></SwiperMultipleDiv>
             </ContainerBody>
             <Footer/>
-        </div>
+        </LastOuterContainer>
     )
 }
 

@@ -4,10 +4,12 @@ import UserPage from "./UserPage";
 import UserSidebar from "../components/UserSidebar";
 import UserTicketPage from "./UserTicketPage";
 import UserFundingPage from "./UserFundingPage";
+import WriterFundingPage from "./WriterFundingPage";
 import WriterSidebar from "../components/WriterSidebar";
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-
+import { LastOuterContainer } from "../styles/BodyStyle";
+import Like from './Like';
 function MyPage(){
     const [sidebar, setSidebar] = useState("/info");
     
@@ -18,7 +20,7 @@ function MyPage(){
 
     
     return (
-        <div>
+        <LastOuterContainer>
             {/* 접근 권한 없는 유저는 intro페이지로 redirect*/}
             {
                 Object.keys(localStorage).includes('infoId') == false ?
@@ -44,16 +46,16 @@ function MyPage(){
                 sidebar == "/info" ? <UserPage/> : 
                 sidebar == "/fundingList" ? <UserFundingPage/> : 
                 sidebar == "/ticketList" ? <UserTicketPage/>:
-                sidebar == "/jjimList" ? <div>t4</div> : null
+                sidebar == "/jjimList" ? <Like/> : null
                 : 
-                sidebar == "/info" ? <UserPage/> : <h2>test</h2> 
+                sidebar == "/info" ? <UserPage/> : <WriterFundingPage/> 
             }
 
-            <div style={{paddingTop:"150px"}}>
+            <div style={{paddingTop:"200px"}}>
             </div>        
             {/* Footer */}
             <Footer/>
-        </div>
+        </LastOuterContainer>
     )
 }
 

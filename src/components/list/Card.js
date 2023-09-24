@@ -3,6 +3,7 @@ import '../../App.css';
 
 function Card({
   key,
+  id,
   contentName,
   contentSum,
   category,
@@ -11,7 +12,9 @@ function Card({
   likes,
   img,
   target,
+  isFunding
 }) {
+  console.log(id)
   return (
     <div className="cardContainer">
       <img src={img} alt="movie" />
@@ -28,10 +31,10 @@ function Card({
             width: '50%',
           }}
         >
-          <h2>{contentName}</h2>
+          <h2 style={{fontSize : '20px',height:'20px', lineHeight:'20px'}}>{contentName}</h2>
         </div>
         <div id="card-rate" style={{ width: '50%' }}>
-          <span>수익률 : {contentSum}</span>
+          <span>수익률 : {parseInt(contentSum).toLocaleString()}원</span>
         </div>
       </div>
 
@@ -42,9 +45,17 @@ function Card({
         <h3 id="like">좋아요 수 : {likes} ❤ </h3>
         <h4 id="category">카테고리 : {category}</h4>
       </div>
-      <a id="footLink" href="#">
+      {
+        isFunding ? 
+        <a id="footLink" href={`/FundingContentDetail/${id}`}>
         👉 Read full project
-      </a>
+        </a>
+        :
+        <a id="footLink" href={`/SupportContentDetail/${id}`}>
+        👉 Read full project
+        </a>
+      }
+
     </div>
   );
 }
